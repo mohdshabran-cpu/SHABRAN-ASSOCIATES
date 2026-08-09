@@ -260,17 +260,32 @@
     fileInput.addEventListener("change", function () {
       const f = fileInput.files[0];
       if (!f) return;
-      if (f.size > 5 * 1024 * 1024) { toast("Gambar terlalu besar (maksimum 5MB).", "error"); return; }
+      if (f.size > 10 * 1024 * 1024) { toast("Gambar terlalu besar (maksimum 10MB).", "error"); return; }
       const reader = new FileReader();
       reader.onload = function (e) {
-        try {
-          localStorage.setItem(storageKey, e.target.result);
-          toast("Gambar berjaya dimuat naik. Ia akan digunakan di seluruh laman web.");
-          renderPreviews();
-          applyCustomImages();
-        } catch (err) {
-          toast("Gambar gagal disimpan (saiz terlalu besar). Sila gunakan gambar yang lebih kecil.", "error");
-        }
+        const img = new Image();
+        img.onload = function () {
+          try {
+            const max = imgType === "qr" ? 1200 : 900;
+            let w = img.width, h = img.height;
+            if (w > max || h > max) {
+              if (w >= h) { h = Math.round(h * max / w); w = max; }
+              else { w = Math.round(w * max / h); h = max; }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w; canvas.height = h;
+            canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+            const data = canvas.toDataURL(imgType === "qr" ? "image/png" : "image/jpeg", 0.85);
+            localStorage.setItem(storageKey, data);
+            toast("Gambar berjaya dimuat naik. Ia digunakan di seluruh laman web (pelayar ini).");
+            renderPreviews();
+            applyCustomImages();
+          } catch (err) {
+            toast("Gambar gagal disimpan (saiz terlalu besar). Sila gunakan gambar yang lebih kecil.", "error");
+          }
+        };
+        img.onerror = function () { toast("Fail gambar tidak sah. Sila pilih fail JPG / PNG.", "error"); };
+        img.src = e.target.result;
       };
       reader.readAsDataURL(f);
     });
