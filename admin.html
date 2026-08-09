@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Pentadbir | Shabran Associates</title>
+<link rel="icon" type="image/svg+xml" href="images/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-card" id="loginCard">
+  <div class="brand-logo">SA</div>
+  <h1>Panel Pentadbir</h1>
+  <p>Shabran Associates — kawalan sistem tempahan konsultasi</p>
+  <input type="password" class="form-control" id="loginPass" placeholder="Kata laluan pentadbir" style="margin-bottom:14px">
+  <button class="btn btn-gold" id="btnLogin" style="width:100%">Masuk</button>
+  <p style="margin-top:16px;font-size:12px"><a href="index.html" style="color:var(--green-700);text-decoration:underline">&#8592; Kembali ke laman utama</a></p>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div class="admin-shell" id="adminShell" style="display:none">
+  <aside class="admin-side">
+    <div class="brand">
+      <span class="brand-logo">SA</span>
+      <span>
+        <span class="brand-name">Shabran Associates</span><br>
+        <span class="brand-sub">Panel Pentadbir</span>
+      </span>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="dash">&#128202; Dashboard</button>
+      <button class="admin-tab" data-tab="bookings">&#128197; Tempahan</button>
+      <button class="admin-tab" data-tab="settings">&#9881; Tetapan</button>
+      <button class="admin-tab" data-tab="blocked">&#128197;&#10006; Tarikh Cuti</button>
+      <button class="admin-tab" id="btnLogout" style="margin-top:20px;color:#e88">&#10149; Log Keluar</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-top">
+      <h1 id="panelTitle">Dashboard</h1>
+      <a href="booking.html" class="btn btn-gold btn-sm" target="_blank">+ Lihat Halaman Tempahan</a>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="admin-panel active" id="panel-dash">
+      <div class="stat-cards">
+        <div class="stat-card"><div class="lb">Jumlah Tempahan</div><div class="val" id="stTotal">-</div></div>
+        <div class="stat-card pending"><div class="lb">Menunggu Pengesahan</div><div class="val" id="stPending">-</div></div>
+        <div class="stat-card confirmed"><div class="lb">Disahkan</div><div class="val" id="stConfirmed">-</div></div>
+        <div class="stat-card"><div class="lb">Ditolak</div><div class="val" id="stRejected">-</div></div>
+      </div>
+      <div class="panel-card">
+        <h3>Tempahan Terkini</h3>
+        <div id="dashRecent"></div>
+      </div>
+    </div>
+
+    <!-- Tempahan -->
+    <div class="admin-panel" id="panel-bookings">
+      <div class="panel-card">
+        <h3>Senarai Tempahan</h3>
+        <div class="filter-row">
+          <div class="select-wrap">
+            <select class="form-control" id="fStatus">
+              <option value="">Semua Status</option>
+              <option value="PENDING">Menunggu Pengesahan</option>
+              <option value="CONFIRMED">Disahkan</option>
+              <option value="REJECTED">Ditolak</option>
+            </select>
+          </div>
+          <input type="text" class="form-control" id="fSearch" placeholder="Cari nama / rujukan / IC / email...">
+          <button class="btn btn-ghost btn-sm" id="btnRefresh">&#8635; Muat Semula</button>
+        </div>
+        <div id="bookingTable"></div>
+      </div>
+    </div>
+
+    <!-- Tetapan -->
+    <div class="admin-panel" id="panel-settings">
+      <div class="panel-card">
+        <h3>Gambar Peguam (Foto Profesional Anda)</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px">Upload gambar anda sendiri — akan digunakan di laman utama dan bahagian Tentang.</p>
+        <div class="upload-zone" id="photoZone">
+          <div class="ic">&#128247;</div>
+          <p><b>Klik untuk pilih gambar</b><br>JPG / PNG, format potret, maksimum 5MB</p>
+          <input type="file" id="photoFile" accept="image/*" style="display:none">
+        </div>
+        <div class="upload-preview" id="photoPreview"></div>
+      </div>
+      <div class="panel-card">
+        <h3>QR Code DuitNow (Gambar QR Firma Anda)</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px">Gambar QR ini akan dipaparkan pada halaman bayaran konsultasi.</p>
+        <div class="upload-zone" id="qrZone">
+          <div class="ic">&#128270;</div>
+          <p><b>Klik untuk pilih gambar QR</b><br>PNG / JPG, maksimum 5MB</p>
+          <input type="file" id="qrFile" accept="image/*" style="display:none">
+        </div>
+        <div class="upload-preview" id="qrPreview"></div>
+      </div>
+      <div class="panel-card">
+        <h3>Maklumat Sistem</h3>
+        <p style="font-size:13.5px;color:var(--ink-soft)" id="sysInfo"></p>
+      </div>
+    </div>
+
+    <!-- Tarikh Cuti -->
+    <div class="admin-panel" id="panel-blocked">
+      <div class="panel-card">
+        <h3>Tambah Tarikh Tidak Tersedia (Cuti / Tidak Boleh Tempah)</h3>
+        <div class="filter-row">
+          <input type="date" class="form-control" id="blockDate">
+          <input type="text" class="form-control" id="blockReason" placeholder="Sebab (cth: Cuti Umum, Keluar Negeri)" style="flex:1;min-width:220px">
+          <button class="btn btn-green btn-sm" id="btnAddBlock">+ Tambah</button>
+        </div>
+        <div id="blockList"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

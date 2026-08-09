@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tempah Konsultasi | Shabran Associates</title>
+<meta name="description" content="Tempah sesi konsultasi syarie bersama Shabran Associates. Pilih tarikh, bayar RM250.00 melalui DuitNow QR, resit automatik dijana.">
+<link rel="icon" type="image/svg+xml" href="images/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span>&#128205; No. 2, Simpang 3, Lorong Bulud, Kg Likas, 89450 Kota Kinabalu, Sabah</span>
+    <span>&#9993; <a href="mailto:mohdshabran@gmail.com">mohdshabran@gmail.com</a> &nbsp;|&nbsp; &#128222; <a href="tel:0123456789">012-345 6789</a></span>
+  </div>
+</div>
+
+<nav class="nav" id="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-logo">SA</span>
+      <span>
+        <span class="brand-name">Shabran Associates</span><br>
+        <span class="brand-sub">Peguam Syarie</span>
+      </span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Utama</a>
+      <a href="index.html#tentang">Tentang</a>
+      <a href="index.html#bidang">Bidang Amalan</a>
+      <a href="index.html#cara">Cara Tempah</a>
+      <a href="status.html">Semak Status</a>
+      <a href="index.html#hubungi">Hubungi</a>
+      <a href="booking.html" class="btn btn-gold btn-sm">Tempah Konsultasi</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <h1>Tempah Sesi Konsultasi</h1>
+    <p>Isi maklumat, pilih tarikh &amp; masa, kemudian buat bayaran <b style="color:var(--gold-light)">RM250.00</b> melalui DuitNow QR</p>
+  </div>
+</header>
+
+<div class="wizard-wrap container">
+  <div class="steps-bar" id="stepsBar">
+    <div class="step-pill active" data-step="1"><span class="n">1</span>Maklumat Anda</div>
+    <div class="step-pill" data-step="2"><span class="n">2</span>Pilih Tarikh &amp; Masa</div>
+    <div class="step-pill" data-step="3"><span class="n">3</span>Bayaran</div>
+    <div class="step-pill" data-step="4"><span class="n">4</span>Siap</div>
+  </div>
+
+  <!-- ============ LANGKAH 1: MAKLUMAT ============ -->
+  <div class="wizard-card" id="step1">
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Nama Penuh <span class="req">*</span></label>
+        <input type="text" class="form-control" id="fName" placeholder="cth: Ahmad bin Abdullah" autocomplete="name">
+        <span class="field-error">Sila isi nama penuh anda.</span>
+      </div>
+      <div class="form-group">
+        <label>Nombor Kad Pengenalan / Pasport <span class="req">*</span></label>
+        <input type="text" class="form-control" id="fIc" placeholder="cth: 880101-12-3456" autocomplete="off">
+        <span class="field-error">Sila isi nombor pengenalan.</span>
+      </div>
+      <div class="form-group">
+        <label>No. Telefon / WhatsApp <span class="req">*</span></label>
+        <input type="tel" class="form-control" id="fPhone" placeholder="cth: 012-345 6789" autocomplete="tel">
+        <span class="field-error">Sila isi nombor telefon yang sah.</span>
+      </div>
+      <div class="form-group full">
+        <label>Alamat Email <span class="req">*</span></label>
+        <input type="email" class="form-control" id="fEmail" placeholder="cth: nama@email.com" autocomplete="email">
+        <span class="field-error">Sila isi alamat email yang sah.</span>
+      </div>
+      <div class="form-group">
+        <label>Kategori Kes <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select class="form-control" id="fCategory">
+            <option value="">-- Pilih kategori --</option>
+            <option>Perceraian &amp; Rujuk</option>
+            <option>Nafkah &amp; Hak Penjagaan Anak</option>
+            <option>Hibah &amp; Wasiat</option>
+            <option>Faraid &amp; Pusaka</option>
+            <option>Harta Sepencarian</option>
+            <option>Pertunangan &amp; Perkahwinan</option>
+            <option>Kesalahan Syariah</option>
+            <option>Nasihat Fiqh &amp; Fatwa</option>
+            <option>Lain-lain</option>
+          </select>
+        </div>
+        <span class="field-error">Sila pilih kategori kes.</span>
+      </div>
+      <div class="form-group">
+        <label>Keterangan Ringkas Kes</label>
+        <textarea class="form-control" id="fDesc" placeholder="Terangkan secara ringkas isu anda (sukarela, untuk persediaan peguam)"></textarea>
+      </div>
+    </div>
+    <div class="wizard-actions">
+      <a href="index.html" class="btn btn-ghost">&#8592; Kembali ke Laman Utama</a>
+      <div class="right">
+        <button class="btn btn-green" id="btnNext1">Seterusnya: Pilih Tarikh &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LANGKAH 2: TARIKH & MASA ============ -->
+  <div class="wizard-card" id="step2" style="display:none">
+    <div class="cal-head">
+      <button class="cal-nav" id="calPrev" aria-label="Bulan sebelumnya">&#8592;</button>
+      <h4 id="calTitle"></h4>
+      <button class="cal-nav" id="calNext" aria-label="Bulan seterusnya">&#8594;</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-legend">
+      <span><span class="dot" style="background:#fdfbf5;border:1.5px solid #e6dcc4"></span>Tiada tempahan</span>
+      <span><span class="dot" style="background:#1b5440;border:1.5px solid #1b5440"></span>Hari dipilih</span>
+      <span><span class="dot" style="background:#e6dcc4"></span>Tidak tersedia / cuti</span>
+    </div>
+    <div class="slots-wrap" id="slotsWrap" style="display:none">
+      <h4 id="slotsTitle"></h4>
+      <div class="slot-grid" id="slotGrid"></div>
+    </div>
+    <div class="wizard-actions">
+      <button class="btn btn-ghost" id="btnBack1">&#8592; Kembali</button>
+      <div class="right">
+        <button class="btn btn-green" id="btnNext2" disabled>Seterusnya: Bayaran &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LANGKAH 3: BAYARAN ============ -->
+  <div class="wizard-card" id="step3" style="display:none">
+    <div class="pay-grid">
+      <div>
+        <div class="fee-card">
+          <div class="fee-head">
+            <b>Ringkasan Bayaran</b>
+            <span id="payAmt">RM250.00</span>
+          </div>
+          <div class="fee-body">
+            <div class="fee-row"><span>Perkhidmatan</span><b>Konsultasi Syarie (1 sesi / 45 minit)</b></div>
+            <div class="fee-row"><span>Tarikh Sesi</span><b id="payDate">-</b></div>
+            <div class="fee-row"><span>Masa Sesi</span><b id="payTime">-</b></div>
+            <div class="fee-row"><span>Nama</span><b id="payName">-</b></div>
+            <div class="fee-row"><span>Jumlah Bayaran</span><b id="payTotal" style="font-size:18px">RM250.00</b></div>
+          </div>
+        </div>
+        <div class="qr-box" style="margin-top:20px">
+          <img id="qrImg" data-img="qr" src="images/qr.png" alt="DuitNow QR Code" onerror="this.src='images/qr.svg'">
+          <span class="amt">RM250.00</span>
+          <span class="qr-hint">Imbas QR di atas dengan aplikasi bank anda<br>(DuitNow / aplikasi bank masing-masing)</span>
+        </div>
+      </div>
+      <div class="pay-verify">
+        <h3>Pengesahan Bayaran</h3>
+        <p class="sub">Sila lengkapkan maklumat selepas bayaran berjaya dibuat.</p>
+        <ol class="pay-steps">
+          <li><span class="n">1</span><span>Imbas QR code di sebelah dengan aplikasi bank / DuitNow anda.</span></li>
+          <li><span class="n">2</span><span>Bayar jumlah <b>RM250.00</b> tepat seperti yang tertera.</span></li>
+          <li><span class="n">3</span><span>Isi maklumat rujukan bayaran di bawah untuk pengesahan.</span></li>
+        </ol>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Bank / Aplikasi Bayaran <span class="req">*</span></label>
+            <input type="text" class="form-control" id="fBank" placeholder="cth: Maybank, CIMB, DuitNow">
+            <span class="field-error">Sila isi nama bank / aplikasi.</span>
+          </div>
+          <div class="form-group">
+            <label>Tarikh Bayaran <span class="req">*</span></label>
+            <input type="date" class="form-control" id="fPayDate" max="">
+            <span class="field-error">Sila pilih tarikh bayaran.</span>
+          </div>
+          <div class="form-group full">
+            <label>Rujukan Transaksi Bayaran <span class="req">*</span></label>
+            <input type="text" class="form-control" id="fRef" placeholder="cth: M240811T123456 (rujukan dari SMS / resit aplikasi bank)">
+            <span class="field-error">Sila isi nombor rujukan transaksi.</span>
+          </div>
+        </div>
+        <label style="display:flex;gap:10px;align-items:flex-start;margin-top:22px;font-size:13px;color:var(--ink-soft);cursor:pointer">
+          <input type="checkbox" id="fTerms" style="margin-top:3px">
+          <span>Saya mengesahkan bahawa bayaran <b>RM250.00</b> telah dibuat dan saya bersetuju dengan <a href="#" style="color:var(--green-700);text-decoration:underline" onclick="event.preventDefault()">syarat-syarat konsultasi</a>.</span>
+        </label>
+        <div class="wizard-actions" style="margin-top:26px">
+          <button class="btn btn-ghost" id="btnBack2">&#8592; Kembali</button>
+          <button class="btn btn-gold" id="btnSubmit">&#128274; Hantar Tempahan &amp; Jana Resit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LANGKAH 4: SIAP ============ -->
+  <div class="wizard-card" id="step4" style="display:none">
+    <div class="success-box">
+      <div class="success-icon">&#10003;</div>
+      <h2>Tempahan Diterima!</h2>
+      <p>Tempahan konsultasi anda telah dihantar. Resit anda telah dijana secara automatik. Sila simpan nombor rujukan tempahan untuk semakan status.</p>
+      <div class="ref-chip">&#128279; <span id="finalRef">-</span></div>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:26px">Pengesahan akan dikemukakan melalui email selepas bayaran disemak oleh pihak firma (biasanya dalam tempoh 24 jam).</p>
+      <div class="success-actions">
+        <a class="btn btn-gold" id="btnReceipt" href="#">&#128196; Lihat / Cetak Resit</a>
+        <a class="btn btn-ghost" href="status.html">Semak Status Tempahan</a>
+        <a class="btn btn-light" href="index.html">Kembali ke Laman Utama</a>
+      </div>
+      <div class="alert-note">&#9888; <b>Penting:</b> Semak inbox dan spam email anda. Sekiranya tiada notifikasi selepas 24 jam, sila hubungi kami melalui <a href="https://wa.me/60123456789" target="_blank" rel="noopener" style="color:var(--green-700);text-decoration:underline">WhatsApp</a> atau email <a href="mailto:mohdshabran@gmail.com" style="color:var(--green-700);text-decoration:underline">mohdshabran@gmail.com</a>.</div>
+    </div>
+  </div>
+
+  <div class="loading" id="calLoading" style="display:none">
+    <div class="spinner"></div>
+    Memuatkan senarai tarikh tersedia...
+  </div>
+  <div class="alert-note" id="backendNote" style="display:none;max-width:880px;margin:0 auto;text-align:center">
+    <b>Notis:</b> Sistem tempahan belum disambungkan kepada server. Tarikh dipaparkan sebagai pratonton. Sila lengkapkan pemasangan Apps Script dahulu (rujuk SETUP.md). <a href="admin.html" style="color:var(--green-700);text-decoration:underline">Ke panel admin</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      &copy; <span id="year"></span> Shabran Associates. Hak cipta terpelihara. &nbsp;|&nbsp; <a href="admin.html">Admin</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/booking.js"></script>
+</body>
+</html>

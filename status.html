@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semak Status Tempahan | Shabran Associates</title>
+<meta name="description" content="Semak status tempahan sesi konsultasi anda di Shabran Associates menggunakan nombor rujukan tempahan.">
+<link rel="icon" type="image/svg+xml" href="images/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span>&#128205; No. 2, Simpang 3, Lorong Bulud, Kg Likas, 89450 Kota Kinabalu, Sabah</span>
+    <span>&#9993; <a href="mailto:mohdshabran@gmail.com">mohdshabran@gmail.com</a> &nbsp;|&nbsp; &#128222; <a href="tel:0123456789">012-345 6789</a></span>
+  </div>
+</div>
+
+<nav class="nav" id="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-logo">SA</span>
+      <span>
+        <span class="brand-name">Shabran Associates</span><br>
+        <span class="brand-sub">Peguam Syarie</span>
+      </span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Utama</a>
+      <a href="index.html#bidang">Bidang Amalan</a>
+      <a href="booking.html">Tempah Konsultasi</a>
+      <a href="status.html" class="active">Semak Status</a>
+      <a href="index.html#hubungi">Hubungi</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <h1>Semak Status Tempahan</h1>
+    <p>Masukkan nombor rujukan tempahan anda (cth: SHA-20260810-ABC12)</p>
+  </div>
+</header>
+
+<div class="status-wrap container">
+  <div class="search-card">
+    <h2>Nombor Rujukan Tempahan</h2>
+    <p>Rujukan dihantar melalui email dan dipaparkan selepas tempahan berjaya dibuat.</p>
+    <div class="search-row">
+      <input type="text" class="form-control" id="refInput" placeholder="SHA-XXXX-XXXXX" autocomplete="off">
+      <button class="btn btn-gold" id="btnSearch">&#128269; Semak</button>
+    </div>
+  </div>
+
+  <div class="loading" id="searchLoading" style="display:none">
+    <div class="spinner"></div>
+    Mencari tempahan...
+  </div>
+
+  <div class="result-card" id="resultCard" style="display:none">
+    <div class="status-head">
+      <h3>Status Tempahan</h3>
+      <span class="badge" id="sBadge">-</span>
+    </div>
+    <div class="detail-grid">
+      <div class="d"><b>Rujukan</b><span id="sRef">-</span></div>
+      <div class="d"><b>Tarikh Sesi</b><span id="sDate">-</span></div>
+      <div class="d"><b>Masa Sesi</b><span id="sTime">-</span></div>
+      <div class="d"><b>Nama</b><span id="sName">-</span></div>
+      <div class="d"><b>Kategori</b><span id="sCategory">-</span></div>
+      <div class="d"><b>Jumlah Bayaran</b><span id="sAmount">-</span></div>
+    </div>
+    <div class="timeline" id="sTimeline"></div>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+      <a href="#" class="btn btn-ghost btn-sm" id="sReceipt">&#128196; Lihat Resit</a>
+      <a href="booking.html" class="btn btn-green btn-sm">Tempah Sesi Baru</a>
+    </div>
+  </div>
+
+  <div class="alert-note" id="searchError" style="display:none;text-align:center">
+    <b>Tempahan tidak ditemui.</b><br><br>Sila semak semula nombor rujukan anda. Sekiranya masalah berterusan, hubungi kami melalui <a href="mailto:mohdshabran@gmail.com" style="color:var(--green-700);text-decoration:underline">mohdshabran@gmail.com</a>.
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      &copy; <span id="year"></span> Shabran Associates. Hak cipta terpelihara. &nbsp;|&nbsp; <a href="admin.html">Admin</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/status.js"></script>
+</body>
+</html>
