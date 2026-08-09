@@ -267,23 +267,10 @@ h1, h2, h3, .serif { font-family: var(--serif); }
   position: absolute; inset: 26px -26px -26px 26px; border: 2px solid var(--gold);
   border-radius: 130px 22px 22px 22px; z-index: -1;
 }
-.about-caption {
-  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
-  background: linear-gradient(180deg, transparent, rgba(5, 15, 10, .94) 45%);
-  border-radius: 0 0 130px 22px; padding: 48px 26px 20px;
-  pointer-events: none;
-}
-.about-caption b { display: block; font-family: var(--serif); font-size: 18px; color: var(--champagne); letter-spacing: .4px; }
-.about-caption span { font-size: 10.5px; letter-spacing: 2.2px; text-transform: uppercase; color: var(--gold-light); font-weight: 600; }
 .about-text .role-line { color: var(--gold-deep); font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; font-size: 12px; margin-bottom: 20px; }
 .about-text h2 { font-size: clamp(32px, 3.8vw, 46px); color: var(--deep); margin-bottom: 8px; font-weight: 600; }
 .about-text p { color: var(--ink-soft); margin-bottom: 16px; }
-.sub-label {
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-deep);
-  font-weight: 700; margin: 26px 0 12px; display: flex; align-items: center; gap: 12px;
-}
-.sub-label::after { content: ""; flex: 1; max-width: 64px; height: 1px; background: linear-gradient(90deg, rgba(212,169,55,.65), transparent); }
-.about-values { display: flex; flex-wrap: wrap; gap: 10px; }
+.about-values { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 4px; }
 .about-values .val {
   font-size: 12.5px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase;
   color: var(--gold-deep); background: rgba(212,169,55,.08);
