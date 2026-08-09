@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resit Rasmi | Shabran Associates</title>
+<link rel="icon" type="image/svg+xml" href="images/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span>&#128205; No. 2, Simpang 3, Lorong Bulud, Kg Likas, 89450 Kota Kinabalu, Sabah</span>
+    <span>&#9993; <a href="mailto:mohdshabran@gmail.com">mohdshabran@gmail.com</a> &nbsp;|&nbsp; &#128222; <a href="tel:0128199296">012-8199296</a></span>
+  </div>
+</div>
+
+<nav class="nav" id="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img class="brand-img" src="images/logo-full.svg" alt="Shabran Associates - Peguam Syarie">
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">Utama</a>
+      <a href="booking.html" class="nav-link">Tempah Konsultasi</a>
+      <a href="blog.html" class="nav-link">Artikel</a>
+      <a href="status.html" class="nav-link">Semak Status</a>
+      <a href="index.html#hubungi" class="nav-link">Hubungi</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <h1>Resit Rasmi</h1>
+    <p>Resit tempahan konsultasi — boleh dicetak atau disimpan sebagai PDF</p>
+  </div>
+</header>
+
+<div class="receipt-wrap container">
+  <div class="receipt-toolbar">
+    <button class="btn btn-ghost btn-sm" onclick="window.print()">&#128424; Cetak / Simpan PDF</button>
+    <a href="status.html" class="btn btn-green btn-sm">Semak Status</a>
+  </div>
+
+  <div class="loading" id="receiptLoading">
+    <div class="spinner"></div>
+    Memuatkan resit...
+  </div>
+
+  <div class="receipt" id="receiptDoc" style="display:none">
+    <div class="receipt-head">
+      <div class="receipt-brand">
+        <h1>Shabran Associates</h1>
+        <span class="tag">Peguam Syarie &bull; Kota Kinabalu, Sabah</span>
+        <p>No. 2, Simpang 3, Lorong Bulud, Kg Likas,<br>89450 Kota Kinabalu, Sabah.<br>Tel: 012-8199296 &bull; mohdshabran@gmail.com</p>
+      </div>
+      <div class="receipt-title">
+        <h2>RESIT RASMI</h2>
+        <p class="no">No. Resit: <b id="rReceiptNo">-</b></p>
+        <p class="no">Rujukan Tempahan: <b id="rRef">-</b></p>
+        <div class="receipt-stamp" style="margin-top:14px">
+          <span class="stamp" id="rStamp">MENUNGGU PENGESAHAN BAYARAN</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="receipt-meta">
+      <div class="col">
+        <b>Bil Kepada</b>
+        <span id="rName">-</span>
+        <span id="rIc"></span><br>
+        <span id="rPhone"></span><br>
+        <span id="rEmail"></span>
+      </div>
+      <div class="col">
+        <b>Tarikh Resit</b>
+        <span id="rDate">-</span>
+      </div>
+      <div class="col">
+        <b>Sesi Konsultasi</b>
+        <span id="rSessionDate">-</span><br>
+        <span id="rSessionTime"></span>
+      </div>
+    </div>
+
+    <table class="receipt-table">
+      <thead>
+        <tr>
+          <th>Perihal</th>
+          <th>Kategori</th>
+          <th>Jumlah (RM)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="desc">
+            <b id="rDesc">Konsultasi Syarie (1 sesi / 45 minit)</b>
+            <span>Rujukan bayaran: <span id="rPayRef">-</span> &bull; Bank: <span id="rBank">-</span> &bull; Tarikh bayaran: <span id="rPayDate">-</span></span>
+          </td>
+          <td id="rCategory">-</td>
+          <td id="rAmount">250.00</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="2" style="text-align:right">JUMLAH DIBAYAR</td>
+          <td id="rTotal">RM250.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="receipt-foot">
+      <div class="pay-method">
+        Kaedah Bayaran:
+        <b>DuitNow QR &bull; Transfer Bank</b>
+        <span id="rStatusNote" style="display:block;margin-top:4px;font-size:12px"></span>
+      </div>
+      <div class="signature">
+        <div class="sig-line"></div>
+        <b>Untuk Shabran Associates</b>
+        <span>Mohd Shabran Syahmi bin Takhta<br>Peguam Syarie</span>
+      </div>
+    </div>
+
+    <p class="receipt-note">Resit ini dijana secara automatik oleh sistem tempahan Shabran Associates.<br>Untuk sebarang pertanyaan berkaitan resit ini, sila hubungi mohdshabran@gmail.com</p>
+  </div>
+
+  <div class="alert-note" id="receiptError" style="display:none;text-align:center">
+    <b>Resit tidak ditemui.</b><br><br>Pautan mungkin telah tamat tempoh. Sila semak status tempahan anda melalui nombor rujukan di bawah.
+    <br><br><a href="status.html" class="btn btn-green btn-sm">Semak Status Tempahan</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="brand">
+          <img class="brand-img" src="images/logo-full.svg" alt="Shabran Associates - Peguam Syarie">
+        </a>
+        <p class="f-desc">Firma guaman syarie yang berdedikasi untuk memberikan nasihat perundangan yang telus, amanah dan profesional kepada masyarakat di Sabah.</p>
+      </div>
+      <div>
+        <h4>Pautan Pantas</h4>
+        <ul>
+          <li><a href="index.html">Utama</a></li>
+          <li><a href="index.html#tentang">Tentang</a></li>
+          <li><a href="index.html#bidang">Bidang Amalan</a></li>
+          <li><a href="blog.html">Artikel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Tempahan</h4>
+        <ul>
+          <li><a href="booking.html">Tempah Konsultasi</a></li>
+          <li><a href="status.html">Semak Status Tempahan</a></li>
+          <li><a href="receipt.html">Resit Saya</a></li>
+          <li><a href="admin.html">Panel Pentadbir</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hubungi Kami</h4>
+        <ul>
+          <li>No. 2, Simpang 3, Lorong Bulud,<br>Kg Likas, 89450 Kota Kinabalu, Sabah</li>
+          <li><a href="mailto:mohdshabran@gmail.com">mohdshabran@gmail.com</a></li>
+          <li><a href="tel:0128199296">012-8199296</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span id="year"></span> Shabran Associates. Hak cipta terpelihara.
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/receipt.js"></script>
+</body>
+</html>

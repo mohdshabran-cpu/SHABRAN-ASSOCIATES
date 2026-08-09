@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 170">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5e2a8"/>
+      <stop offset="0.45" stop-color="#d4a937"/>
+      <stop offset="1" stop-color="#8f6d1f"/>
+    </linearGradient>
+    <linearGradient id="goldsoft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8d5a4"/>
+      <stop offset="1" stop-color="#b8892f"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0dc9c"/>
+      <stop offset="0.5" stop-color="#d4a937"/>
+      <stop offset="1" stop-color="#9c7728"/>
+    </linearGradient>
+    <radialGradient id="inner" cx="0.5" cy="0.4" r="0.8">
+      <stop offset="0" stop-color="#232323"/>
+      <stop offset="1" stop-color="#0a0a0a"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ============ LENCANA (CREST) ============ -->
+  <g transform="translate(95,85)">
+    <circle r="72" fill="url(#ring)"/>
+    <circle r="67" fill="#0d0d0d"/>
+    <circle r="62" fill="url(#inner)"/>
+    <circle r="62" fill="none" stroke="#d4a937" stroke-width="0.9" opacity="0.55"/>
+
+    <!-- Bintang 8 penjuru halus -->
+    <g fill="none" stroke="#d4a937" stroke-width="0.9" opacity="0.3">
+      <path d="M0,-44 L11,-33 L33,-33 L33,-11 L44,0 L33,11 L33,33 L11,33 L0,44 L-11,33 L-33,33 L-33,11 L-44,0 L-33,-11 L-33,-33 L-11,-33 Z"/>
+      <circle r="32"/>
+    </g>
+
+    <!-- Kalungan laurel -->
+    <g stroke="url(#goldsoft)" stroke-width="1.8" fill="none" stroke-linecap="round">
+      <path d="M-26,52 C-18,58 -6,61 2,57" opacity="0.9"/>
+      <path d="M26,52 C18,58 6,61 -2,57" opacity="0.9"/>
+    </g>
+    <g fill="#d4a937" opacity="0.9">
+      <ellipse cx="-20" cy="52" rx="2.6" ry="6.5" transform="rotate(-30 -20 52)"/>
+      <ellipse cx="-11" cy="57.5" rx="2.6" ry="6.5" transform="rotate(-10 -11 57.5)"/>
+      <ellipse cx="20" cy="52" rx="2.6" ry="6.5" transform="rotate(30 20 52)"/>
+      <ellipse cx="11" cy="57.5" rx="2.6" ry="6.5" transform="rotate(10 11 57.5)"/>
+    </g>
+
+    <!-- Teks melengkung -->
+    <path id="arcT" d="M-46,-14 A47,47 0 1,1 46,-14" fill="none"/>
+    <text font-family="Georgia, 'Times New Roman', serif" font-size="12.5" font-weight="bold" fill="#e8d5a4" letter-spacing="3.2">
+      <textPath href="#arcT" startOffset="50%" text-anchor="middle">SHABRAN ASSOCIATES</textPath>
+    </text>
+
+    <!-- Monogram SA -->
+    <text x="0" y="10" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="bold" fill="url(#gold)" text-anchor="middle">SA</text>
+    <text x="0" y="32" font-family="Georgia, 'Times New Roman', serif" font-size="8.5" font-weight="bold" fill="#d4a937" letter-spacing="2.5" text-anchor="middle">PEGUAM SYARIE</text>
+  </g>
+
+  <!-- ============ WORDMARK ============ -->
+  <text x="200" y="88" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="bold" fill="url(#gold)" letter-spacing="3">SHABRAN</text>
+  <text x="203" y="114" font-family="Georgia, 'Times New Roman', serif" font-size="27" font-weight="bold" fill="#e8d5a4" letter-spacing="10">ASSOCIATES</text>
+
+  <!-- Garisan emas pemisah -->
+  <line x1="204" y1="128" x2="612" y2="128" stroke="url(#goldsoft)" stroke-width="1.6" opacity="0.8"/>
+
+  <!-- Tagline -->
+  <text x="204" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="14.5" font-weight="bold" fill="#d4a937" letter-spacing="4">PEGUAM SYARIE &#9670; KOTA KINABALU, SABAH</text>
+
+  <!-- Bintang kecil -->
+  <path d="M205 66l2.2 6.1 6.1 2.2-6.1 2.2-2.2 6.1-2.2-6.1-6.1-2.2 6.1-2.2z" fill="#f0dc9c" opacity="0.85"/>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5e2a8"/>
+      <stop offset="0.45" stop-color="#d4a937"/>
+      <stop offset="1" stop-color="#8f6d1f"/>
+    </linearGradient>
+    <linearGradient id="goldsoft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8d5a4"/>
+      <stop offset="1" stop-color="#b8892f"/>
+    </linearGradient>
+    <linearGradient id="deep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a1a"/>
+      <stop offset="0.6" stop-color="#111111"/>
+      <stop offset="1" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <radialGradient id="inner" cx="0.5" cy="0.38" r="0.75">
+      <stop offset="0" stop-color="#232323"/>
+      <stop offset="1" stop-color="#0a0a0a"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Cincin luar emas -->
+  <circle cx="128" cy="128" r="124" fill="url(#gold)"/>
+  <circle cx="128" cy="128" r="116" fill="url(#deep)"/>
+
+  <!-- Cincin emas halus -->
+  <circle cx="128" cy="128" r="108" fill="none" stroke="url(#goldsoft)" stroke-width="1.6" opacity="0.85"/>
+
+  <!-- Cakera dalam -->
+  <circle cx="128" cy="128" r="100" fill="url(#inner)"/>
+  <circle cx="128" cy="128" r="100" fill="none" stroke="#d4a937" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Bintang 8 penjuru (corak Islam) halus -->
+  <g transform="translate(128,128)" fill="none" stroke="#d4a937" stroke-width="1" opacity="0.28">
+    <path d="M0,-72 L18,-54 L54,-54 L54,-18 L72,0 L54,18 L54,54 L18,54 L0,72 L-18,54 L-54,54 L-54,18 L-72,0 L-54,-18 L-54,-54 L-18,-54 Z"/>
+    <circle r="52"/>
+  </g>
+
+  <!-- Bintang kecil emas -->
+  <g fill="#e8d5a4">
+    <path d="M128 6l3.4 9.4 9.4 3.4-9.4 3.4L128 31.6l-3.4-9.4-9.4-3.4 9.4-3.4z" opacity="0.9"/>
+    <path d="M128 224l3.4-9.4 9.4-3.4-9.4-3.4L128 198.4l-3.4 9.4-9.4 3.4 9.4 3.4z" opacity="0.6"/>
+  </g>
+
+  <!-- Kalungan (laurel) emas -->
+  <g stroke="url(#goldsoft)" stroke-width="2.2" fill="none" stroke-linecap="round">
+    <path d="M40,190 C60,208 86,214 104,206" opacity="0.9"/>
+    <path d="M216,190 C196,208 170,214 152,206" opacity="0.9"/>
+  </g>
+  <g fill="#d4a937" opacity="0.9">
+    <ellipse cx="52" cy="192" rx="3.4" ry="8" transform="rotate(-38 52 192)"/>
+    <ellipse cx="66" cy="203" rx="3.4" ry="8" transform="rotate(-22 66 203)"/>
+    <ellipse cx="82" cy="210" rx="3.4" ry="8" transform="rotate(-6 82 210)"/>
+    <ellipse cx="204" cy="192" rx="3.4" ry="8" transform="rotate(38 204 192)"/>
+    <ellipse cx="190" cy="203" rx="3.4" ry="8" transform="rotate(22 190 203)"/>
+    <ellipse cx="174" cy="210" rx="3.4" ry="8" transform="rotate(6 174 210)"/>
+  </g>
+
+  <!-- Teks melengkung atas -->
+  <path id="arcTop" d="M128,128 m-78,-10 a78,78 0 1,1 156,0" fill="none"/>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="21" font-weight="bold" fill="#e8d5a4" letter-spacing="4.5">
+    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">SHABRAN ASSOCIATES</textPath>
+  </text>
+
+  <!-- Teks melengkung bawah -->
+  <path id="arcBot" d="M128,128 m-60,44 a60,60 0 1,0 120,0" fill="none"/>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="13.5" font-weight="bold" fill="#d4a937" letter-spacing="4">
+    <textPath href="#arcBot" startOffset="50%" text-anchor="middle">PEGUAM SYARIE &bull; SABAH</textPath>
+  </text>
+
+  <!-- Pembatas titik emas -->
+  <circle cx="128" cy="104.5" r="3" fill="#f0dc9c"/>
+  <circle cx="128" cy="152" r="2.6" fill="#f0dc9c" opacity="0.85"/>
+
+  <!-- Monogram SA -->
+  <text x="128" y="136" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="bold" fill="url(#gold)" text-anchor="middle">SA</text>
+</svg>
