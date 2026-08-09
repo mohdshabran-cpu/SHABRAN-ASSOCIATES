@@ -805,9 +805,10 @@ select.form-control { appearance: none; }
 .btn-warn:hover { background: #9a6b12; color: #fff; }
 
 .upload-zone {
-  border: 2px dashed var(--gold-deep); border-radius: 13px; padding: 28px; text-align: center;
+  display: block; border: 2px dashed var(--gold-deep); border-radius: 13px; padding: 28px; text-align: center;
   cursor: pointer; transition: all .2s; background: var(--paper);
 }
+.upload-zone:active { transform: translateY(0); }
 .upload-zone:hover { border-color: var(--gold); background: #faf4e4; transform: translateY(-2px); }
 .upload-zone .ic { font-size: 32px; margin-bottom: 8px; }
 .upload-zone p { font-size: 13px; color: var(--ink-soft); }

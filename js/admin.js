@@ -251,15 +251,13 @@
   }
 
   /* ---------- Upload gambar ---------- */
-  function setupUpload(fileInputId, zoneId, previewId, storageKey, imgType) {
+  function setupUpload(fileInputId, previewId, storageKey, imgType) {
     const fileInput = $(fileInputId);
-    const zone = $(zoneId);
     const preview = $(previewId);
 
-    zone.addEventListener("click", function () { fileInput.click(); });
     fileInput.addEventListener("change", function () {
       const f = fileInput.files[0];
-      if (!f) return;
+      if (!f) { toast("Tiada fail dipilih.", "error"); return; }
       if (f.size > 10 * 1024 * 1024) { toast("Gambar terlalu besar (maksimum 10MB).", "error"); return; }
       const reader = new FileReader();
       reader.onload = function (e) {
@@ -329,8 +327,8 @@
       t.addEventListener("click", function () { switchTab(t.dataset.tab); });
     });
 
-    setupUpload("#photoFile", "#photoZone", "photoPreview", CONFIG.storage.photo, "photo");
-    setupUpload("#qrFile", "#qrZone", "qrPreview", CONFIG.storage.qr, "qr");
+    setupUpload("#photoFile", "photoPreview", CONFIG.storage.photo, "photo");
+    setupUpload("#qrFile", "qrPreview", CONFIG.storage.qr, "qr");
 
     if (sessionStorage.getItem("sha_admin") === "1") {
       loggedIn = true;
