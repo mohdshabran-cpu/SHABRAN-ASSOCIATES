@@ -31,7 +31,7 @@ const CONFIG = {
   /* ---------- Backend (Google Apps Script) ----------
      SELEPAS deploy Apps Script, tampal URL di sini.
      Contoh: "https://script.google.com/macros/s/ABCDEFGHIJKLMNOPQRSTUVWXYZ/exec" */
-  scriptUrl: "https://script.google.com/macros/s/REPLACE_WITH_YOUR_URL/exec",
+  scriptUrl: "https://script.google.com/macros/s/AKfycbwKHOAUMAXCK5hyyJwUfvGbCHta4nYwdl5fO2ucUyCuu4j26Yy8CUKSrMbh_joIPVBT/exec",
 
   /* ---------- Keselamatan Admin ---------- */
   adminPassword: "shabran2026",
