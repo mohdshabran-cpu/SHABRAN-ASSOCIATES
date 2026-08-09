@@ -216,19 +216,6 @@ h1, h2, h3, .serif { font-family: var(--serif); }
 /* Cincin orbit berputar (dibuang - mod statik) */
 /* Teks bulat berputar (dibuang - mod statik) */
 .portrait-frame { z-index: 1; }
-.float-card {
-  position: absolute; background: rgba(255, 253, 247, .92); color: var(--ink);
-  border-radius: 17px; box-shadow: 0 20px 50px rgba(0,0,0,.4); padding: 18px 24px; font-size: 13.5px;
-  display: flex; align-items: center; gap: 14px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(212,169,55,.4);
-}
-.float-card .ic {
-  width: 48px; height: 48px; border-radius: 13px; background: linear-gradient(135deg, var(--forest), var(--deep));
-  color: var(--gold-light); display: grid; place-items: center; font-size: 22px; flex-shrink: 0;
-}
-.float-card b { display: block; font-size: 15.5px; color: var(--deep); font-family: var(--serif); letter-spacing: .3px; }
-.float-card.t1 { top: 24px; right: -40px; }
-.float-card.t2 { bottom: 40px; left: -56px; }
 
 /* ---------------- Marquee (dibuang - mod statik) ---------------- */
 
@@ -868,8 +855,6 @@ select.form-control { appearance: none; }
   .hero p.desc { margin: 0 0 38px; }
   .hero-cta, .hero-stats { justify-content: flex-start; }
   .hero-portrait { margin-top: 26px; }
-  .float-card.t1 { right: 0; }
-  .float-card.t2 { left: 0; }
   .about-grid, .contact-grid, .pay-grid { grid-template-columns: 1fr; }
   .slot-grid { grid-template-columns: repeat(3, 1fr); }
   .stat-cards { grid-template-columns: repeat(2, 1fr); }
@@ -906,8 +891,6 @@ select.form-control { appearance: none; }
   .hero-stats { flex-direction: column; gap: 22px; }
   .stat { border-right: none; padding: 0; }
   .footer-grid { grid-template-columns: 1fr; }
-  .float-card.t1 { right: 4px; }
-  .float-card.t2 { left: 4px; }
   .cred-list { padding-left: 24px; }
   .cred::before { left: -24px; }
 }
