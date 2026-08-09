@@ -68,12 +68,12 @@ function applyCustomImages() {
     const qr = localStorage.getItem(CONFIG.storage.qr);
     if (qr) {
       const imgs = $all("[data-img=qr]");
-      imgs.forEach(function (i) { i.src = qr; });
+      imgs.forEach(function (i) { i.onerror = null; i.src = qr; });
     }
     const photo = localStorage.getItem(CONFIG.storage.photo);
     if (photo) {
       const imgs = $all("[data-img=photo]");
-      imgs.forEach(function (i) { i.src = photo; });
+      imgs.forEach(function (i) { i.onerror = null; i.src = photo; });
     }
   } catch (e) { /* ignore */ }
 }
@@ -204,3 +204,4 @@ document.addEventListener("DOMContentLoaded", function () {
   initContactForm();
   applyCustomImages();
 });
+window.addEventListener("load", function () { applyCustomImages(); });
