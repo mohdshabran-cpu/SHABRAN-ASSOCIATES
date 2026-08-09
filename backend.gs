@@ -33,7 +33,16 @@ var CONFIG = {
   SHEET_BLOCKED: "blocked"
 };
 
-var SS = SpreadsheetApp.getActiveSpreadsheet();
+var SS = (function () {
+  try {
+    var active = SpreadsheetApp.getActiveSpreadsheet();
+    if (active) return active;
+  } catch (e) { /* skrip kendiri (standalone) */ }
+  var dbName = "Shabran Associates - Database";
+  var it = DriveApp.getFilesByName(dbName);
+  if (it.hasNext()) return SpreadsheetApp.openById(it.next().getId());
+  return SpreadsheetApp.create(dbName);
+})();
 
 /******************** UTILS ********************/
 function getSheet_(name, headers) {
