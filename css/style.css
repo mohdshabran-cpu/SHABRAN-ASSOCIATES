@@ -211,66 +211,10 @@ h1, h2, h3, .serif { font-family: var(--serif); }
   position: absolute; inset: -40px; z-index: -1;
   background: radial-gradient(closest-side, rgba(212,169,55,.28), transparent);
   filter: blur(40px);
-  animation: pulseGlow 4.5s ease-in-out infinite;
-}
-@keyframes pulseGlow {
-  0%, 100% { opacity: .65; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.14); }
 }
 
-/* Zarah emas melayang */
-.sparkle {
-  position: absolute; color: var(--gold); font-size: 15px;
-  animation: sparkleUp 7.5s ease-in-out infinite;
-  opacity: 0; pointer-events: none; z-index: 2; text-shadow: 0 0 14px rgba(212,169,55,.8);
-}
-.sparkle.s1 { top: 16%; left: 5%; }
-.sparkle.s2 { top: 30%; left: 36%; font-size: 11px; animation-delay: 1.3s; }
-.sparkle.s3 { top: 10%; left: 66%; animation-delay: 2.1s; }
-.sparkle.s4 { bottom: 22%; left: 10%; font-size: 12px; animation-delay: 3s; }
-.sparkle.s5 { bottom: 28%; right: 6%; animation-delay: .7s; font-size: 14px; }
-.sparkle.s6 { top: 60%; left: 2%; font-size: 13px; animation-delay: 4.1s; }
-.sparkle.s7 { bottom: 10%; left: 42%; animation-delay: 5s; font-size: 11px; }
-.sparkle.s8 { top: 18%; right: 20%; font-size: 10px; animation-delay: 3.4s; }
-.sparkle.cta-s { animation-duration: 8.5s; }
-@keyframes sparkleUp {
-  0% { transform: translateY(0) scale(0); opacity: 0; }
-  14% { transform: translateY(-18px) scale(1); opacity: .95; }
-  50% { transform: translateY(-90px) scale(.65); opacity: .45; }
-  100% { transform: translateY(-160px) scale(0); opacity: 0; }
-}
-
-/* Cincin orbit berputar */
-.orbit-ring {
-  position: absolute; top: 50%; left: 50%;
-  width: 400px; height: 400px; margin: -200px 0 0 -200px;
-  border: 1.5px dashed rgba(212, 169, 55, .55); border-radius: 50%;
-  animation: orbitSpin 26s linear infinite; pointer-events: none;
-}
-.orbit-ring::before {
-  content: "\2726"; position: absolute; top: -13px; left: 50%;
-  transform: translateX(-50%); color: var(--gold); font-size: 24px;
-  text-shadow: 0 0 16px rgba(212,169,55,.9);
-}
-.orbit-ring::after {
-  content: ""; position: absolute; bottom: 30px; right: 14px;
-  width: 11px; height: 11px; border-radius: 50%; background: var(--gold);
-  box-shadow: 0 0 14px rgba(212,169,55,1);
-}
-@keyframes orbitSpin { to { transform: rotate(360deg); } }
-
-/* Teks bulat berputar */
-.spin-text {
-  position: absolute; top: 50%; left: 50%;
-  width: 430px; height: 430px; margin: -215px 0 0 -215px;
-  z-index: 0; pointer-events: none; animation: spinText 16s linear infinite;
-}
-.spin-text svg { width: 100%; height: 100%; overflow: visible; }
-.spin-text text {
-  fill: var(--champagne); font-size: 11.5px; letter-spacing: 4.5px;
-  font-weight: 600; font-family: var(--sans); opacity: .9;
-}
-@keyframes spinText { to { transform: rotate(360deg); } }
+/* Cincin orbit berputar (dibuang - mod statik) */
+/* Teks bulat berputar (dibuang - mod statik) */
 .portrait-frame { z-index: 1; }
 .float-card {
   position: absolute; background: rgba(255, 253, 247, .92); color: var(--ink);
@@ -283,42 +227,10 @@ h1, h2, h3, .serif { font-family: var(--serif); }
   color: var(--gold-light); display: grid; place-items: center; font-size: 22px; flex-shrink: 0;
 }
 .float-card b { display: block; font-size: 15.5px; color: var(--deep); font-family: var(--serif); letter-spacing: .3px; }
-.float-card.t1 { top: 24px; right: -40px; animation: floaty 5.5s ease-in-out infinite; }
-.float-card.t2 { bottom: 40px; left: -56px; animation: floaty 6.5s ease-in-out 1.2s infinite; }
-@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+.float-card.t1 { top: 24px; right: -40px; }
+.float-card.t2 { bottom: 40px; left: -56px; }
 
-.scroll-hint {
-  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
-  color: #9a9a9a; font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: .8;
-}
-.scroll-hint .line { width: 1px; height: 44px; background: linear-gradient(var(--gold), transparent); animation: drop 1.8s ease-in-out infinite; }
-@keyframes drop { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
-
-/* ---------------- Marquee (teks bergerak) ---------------- */
-.marquee {
-  background: linear-gradient(90deg, #161616, #1f1f1f 50%, #161616);
-  border-top: 1px solid rgba(212, 169, 55, .35);
-  border-bottom: 1px solid rgba(212, 169, 55, .35);
-  overflow: hidden; padding: 17px 0; position: relative;
-}
-.marquee::before, .marquee::after {
-  content: ""; position: absolute; top: 0; bottom: 0; width: 110px; z-index: 2; pointer-events: none;
-}
-.marquee::before { left: 0; background: linear-gradient(90deg, #161616, transparent); }
-.marquee::after { right: 0; background: linear-gradient(-90deg, #161616, transparent); }
-.marquee-track {
-  display: inline-flex; white-space: nowrap;
-  animation: marqueeMove 28s linear infinite; will-change: transform;
-}
-.marquee:hover .marquee-track { animation-play-state: paused; }
-.marquee-half {
-  display: inline-block; padding: 0 12px;
-  color: var(--champagne); font-size: 13.5px; letter-spacing: 3.5px;
-  text-transform: uppercase; font-weight: 600;
-}
-.marquee-half .star { color: var(--gold); font-size: 11px; vertical-align: middle; }
-@keyframes marqueeMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* ---------------- Marquee (dibuang - mod statik) ---------------- */
 
 /* ---------------- Seksi ---------------- */
 .section { padding: 110px 0; position: relative; }
@@ -368,7 +280,6 @@ h1, h2, h3, .serif { font-family: var(--serif); }
   border-radius: 50%; background: radial-gradient(circle at 32% 28%, #1d1d1d, var(--night));
   border: 2px solid var(--gold); box-shadow: var(--shadow-md), 0 0 0 5px rgba(212,169,55,.15);
   display: grid; place-items: center; text-align: center;
-  animation: floaty 6.5s ease-in-out infinite;
 }
 .about-seal::before {
   content: ""; position: absolute; inset: 6px; border-radius: 50%;
@@ -650,16 +561,11 @@ h1, h2, h3, .serif { font-family: var(--serif); }
 .wa-float:hover { transform: scale(1.12) rotate(8deg); }
 .wa-float .pulse {
   position: absolute; inset: 0; border-radius: 50%; border: 2px solid #2ee06f;
-  animation: pulse 2s infinite; pointer-events: none;
+  opacity: .35; pointer-events: none;
 }
-@keyframes pulse { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.7); opacity: 0; } }
 
-/* ---------------- Reveal ---------------- */
-.reveal { opacity: 0; transform: translateY(34px); transition: opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1); }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal[data-delay="1"] { transition-delay: .12s; }
-.reveal[data-delay="2"] { transition-delay: .24s; }
-.reveal[data-delay="3"] { transition-delay: .36s; }
+/* ---------------- Reveal (mod statik: kandungan sentiasa kelihatan) ---------------- */
+.reveal { opacity: 1; transform: none; }
 
 /* ---------------- Page hero (sistem) ---------------- */
 .page-hero {
@@ -1021,8 +927,6 @@ select.form-control { appearance: none; }
   .hero-stats { flex-direction: column; gap: 22px; }
   .stat { border-right: none; padding: 0; }
   .footer-grid { grid-template-columns: 1fr; }
-  .spin-text { width: 300px; height: 300px; margin: -150px 0 0 -150px; }
-  .orbit-ring { width: 280px; height: 280px; margin: -140px 0 0 -140px; }
   .float-card.t1 { right: 4px; }
   .float-card.t2 { left: 4px; }
   .about-seal { left: 10px; bottom: -20px; width: 92px; height: 92px; }
@@ -1033,10 +937,7 @@ select.form-control { appearance: none; }
 
 /* ---------------- Gerakan dikurangkan ---------------- */
 @media (prefers-reduced-motion: reduce) {
-  .sparkle, .orbit-ring, .spin-text, .hero-glow, .marquee-track,
-  .float-card, .wa-float .pulse, .scroll-hint .line { animation: none !important; }
-  .sparkle { opacity: .7; }
-  .marquee-track { animation-duration: 60s; }
+  .hero-glow, .wa-float .pulse { animation: none !important; }
 }
 
 /* ---------------- Print (resit) ---------------- */
