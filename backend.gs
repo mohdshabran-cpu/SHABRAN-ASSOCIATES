@@ -60,8 +60,38 @@ function initSheets_() {
 }
 
 function todayKey_(d) {
-  var pad = function (n) { return String(n).padStart(2, "0"); };
-  return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  return pad2_(d.getFullYear()) + "-" + pad2_(d.getMonth() + 1) + "-" + pad2_(d.getDate());
+}
+
+function pad2_(n) { return String(n).padStart(2, "0"); }
+
+function normTime_(v) {
+  if (v instanceof Date) return pad2_(v.getHours()) + ":" + pad2_(v.getMinutes());
+  if (typeof v === "number") {
+    var total = Math.round(v * 1440) % 1440;
+    return pad2_(Math.floor(total / 60)) + ":" + pad2_(total % 60);
+  }
+  var s = String(v || "").trim();
+  if (!s) return "";
+  var m = s.match(/(\d{1,2}):(\d{2})/);
+  if (m) return pad2_(parseInt(m[1], 10)) + ":" + m[2];
+  return s;
+}
+
+function normDate_(v) {
+  if (v instanceof Date) return todayKey_(v);
+  var s = String(v || "").trim();
+  var m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return m[1] + "-" + m[2] + "-" + m[3];
+  var d = new Date(s);
+  return isNaN(d.getTime()) ? s : todayKey_(d);
+}
+
+function normalizeBooking_(o) {
+  if (o.time !== undefined) o.time = normTime_(o.time);
+  if (o.date !== undefined) o.date = normDate_(o.date);
+  if (o.payDate !== undefined) o.payDate = normDate_(o.payDate);
+  return o;
 }
 
 function fmtMY_(key) {
@@ -84,7 +114,7 @@ function rowsToBookings_(rows) {
     var r = rows[i];
     var o = {};
     for (var j = 0; j < headers.length; j++) o[headers[j]] = r[j] === undefined ? "" : r[j];
-    out.push(o);
+    out.push(normalizeBooking_(o));
   }
   return out;
 }
@@ -97,7 +127,7 @@ function findBooking_(sh, ref) {
       var o = {};
       for (var j = 0; j < headers.length; j++) o[headers[j]] = data[i][j] === undefined ? "" : data[i][j];
       o.row = i + 1;
-      return o;
+      return normalizeBooking_(o);
     }
   }
   return null;

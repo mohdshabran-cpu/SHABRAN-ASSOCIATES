@@ -16,6 +16,25 @@ function fmtMoney(n) {
   return "RM" + Number(n || 0).toFixed(2);
 }
 
+function fmtTime12(v) {
+  if (!v) return "-";
+  let s = String(v).trim();
+  const iso = s.match(/^\d{4}-\d{2}-\d{2}T/);
+  if (iso) {
+    const d = new Date(s);
+    if (!isNaN(d.getTime())) {
+      s = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+    }
+  }
+  const m = s.match(/(\d{1,2}):(\d{2})/);
+  if (!m) return s || "-";
+  let h = parseInt(m[1], 10);
+  const min = m[2];
+  const ap = h >= 12 ? "pm" : "am";
+  if (h === 0) h = 12; else if (h > 12) h = h - 12;
+  return h + "." + min + " " + ap;
+}
+
 function genRef() {
   const d = new Date();
   const p = function (x, l) { return String(x).padStart(l || 2, "0"); };

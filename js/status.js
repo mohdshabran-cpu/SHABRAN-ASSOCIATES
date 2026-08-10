@@ -30,7 +30,7 @@
 
     $("#sRef").textContent = b.ref;
     $("#sDate").textContent = fmtMY(b.date);
-    $("#sTime").textContent = b.time + " (45 minit)";
+    $("#sTime").textContent = "Bermula " + fmtTime12(b.time) + " (sesi 45 minit)";
     $("#sName").textContent = b.name;
     $("#sCategory").textContent = b.category || "-";
     $("#sAmount").textContent = fmtMoney(b.amount || CONFIG.fee);
@@ -42,7 +42,7 @@
     const steps = [
       { done: true, t: "Tempahan Diterima", s: "Tempahan anda telah dihantar pada " + (b.created ? new Date(b.created).toLocaleString("ms-MY") : "-") + ". Resit dijana automatik." },
       { done: b.status !== "PENDING", t: "Pengesahan Bayaran", s: b.status === "CONFIRMED" ? "Bayaran anda telah disahkan oleh Shabran Associates." : b.status === "REJECTED" ? "Bayaran anda ditolak. Sila hubungi firma." : "Bayaran RM" + (b.amount || CONFIG.fee).toFixed(2) + " sedang disemak oleh pihak firma (biasanya dalam 24 jam)." },
-      { done: b.status === "CONFIRMED", t: "Sesi Konsultasi", s: "Sesi anda dijadualkan pada " + fmtMY(b.date) + " jam " + b.time + ". Sila hadir 10 minit awal." }
+      { done: b.status === "CONFIRMED", t: "Sesi Konsultasi", s: "Sesi anda dijadualkan pada " + fmtMY(b.date) + ", " + fmtTime12(b.time) + ". Sila hadir 10 minit awal." }
     ];
 
     steps.forEach(function (st) {

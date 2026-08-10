@@ -122,7 +122,7 @@
     }
     wrap.innerHTML = "<table class='b-table'><thead><tr><th>Rujukan</th><th>Tarikh Sesi</th><th>Nama</th><th>Status</th></tr></thead><tbody>" +
       recent.map(function (b) {
-        return "<tr><td class='ref'>" + esc(b.ref) + "</td><td>" + fmtMY(b.date) + " " + esc(b.time) + "</td><td>" + esc(b.name) + "</td><td><span class='badge " + statusBadge[b.status] + "'>" + statusLabel[b.status] + "</span></td></tr>";
+        return "<tr><td class='ref'>" + esc(b.ref) + "</td><td>" + fmtMY(b.date) + " " + esc(fmtTime12(b.time)) + "</td><td>" + esc(b.name) + "</td><td><span class='badge " + statusBadge[b.status] + "'>" + statusLabel[b.status] + "</span></td></tr>";
       }).join("") + "</tbody></table>";
   }
 
@@ -146,7 +146,7 @@
       list.map(function (b) {
         return "<tr>"
           + "<td class='ref'>" + esc(b.ref) + "<br><span style='font-size:11px;color:var(--ink-soft)'>" + fmtDateTime(b.created) + "</span></td>"
-          + "<td>" + fmtMY(b.date) + "<br><b>" + esc(b.time) + "</b> &bull; " + esc(b.category || "-") + "</td>"
+          + "<td>" + fmtMY(b.date) + "<br><b>" + esc(fmtTime12(b.time)) + "</b> &bull; " + esc(b.category || "-") + "</td>"
           + "<td><b>" + esc(b.name) + "</b><br><span style='font-size:12px;color:var(--ink-soft)'>" + esc(b.ic) + "<br>" + esc(b.phone) + " &bull; " + esc(b.email) + "</span></td>"
           + "<td><b>" + fmtMoney(b.amount || CONFIG.fee) + "</b><br><span style='font-size:12px;color:var(--ink-soft)'>" + esc(b.bank || "-") + "<br>Ruj: " + esc(b.payRef || "-") + "</span></td>"
           + "<td><span class='badge " + statusBadge[b.status] + "'>" + statusLabel[b.status] + "</span>"
@@ -178,7 +178,7 @@
       const subject = encodeURIComponent("Tempahan Konsultasi - " + ref);
       const body = encodeURIComponent(
         "Assalamualaikum " + b.name + ",\n\nRujukan tempahan: " + ref +
-        "\nTarikh: " + fmtMY(b.date) + " jam " + b.time +
+        "\nTarikh: " + fmtMY(b.date) + ", " + fmtTime12(b.time) +
         "\nStatus: " + statusLabel[b.status] +
         "\n\nSemak status: https://yoursite.github.io/status.html\n\nShabran Associates"
       );
