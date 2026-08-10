@@ -224,3 +224,8 @@ document.addEventListener("DOMContentLoaded", function () {
   applyCustomImages();
 });
 window.addEventListener("load", function () { applyCustomImages(); });
+window.addEventListener("storage", function (e) {
+  if (e.key === CONFIG.storage.qr || e.key === CONFIG.storage.photo) {
+    applyCustomImages();
+  }
+});
