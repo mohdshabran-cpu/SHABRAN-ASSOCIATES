@@ -5,21 +5,32 @@
 (function () {
   "use strict";
 
+  const MONTHS = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+
   function fmtMY(key) {
-    const MONTHS = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
     if (!key) return "-";
     const p = String(key).split("-");
     if (p.length !== 3) return key;
-    return p[2] + " " + MONTHS[parseInt(p[1], 10) - 1] + " " + p[0];
+    return parseInt(p[2], 10) + " " + MONTHS[parseInt(p[1], 10) - 1] + " " + p[0];
+  }
+
+  function fmtTime(hhmm) {
+    if (!hhmm) return "-";
+    const p = String(hhmm).split(":");
+    let h = parseInt(p[0], 10);
+    const m = parseInt(p[1], 10) || 0;
+    if (isNaN(h)) return hhmm;
+    const ap = h >= 12 ? "p.m" : "a.m";
+    if (h === 0) h = 12; else if (h > 12) h = h - 12;
+    return h + "." + String(m).padStart(2, "0") + " " + ap;
   }
 
   function fmtDateTime(iso) {
     if (!iso) return "-";
     const d = new Date(iso);
     if (isNaN(d.getTime())) return iso;
-    const MONTHS = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
     return d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear() +
-      ", " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+      ", " + fmtTime(String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"));
   }
 
   function statusLabel(s) {
@@ -40,7 +51,7 @@
     $("#rEmail").textContent = "Email: " + b.email;
     $("#rDate").textContent = fmtDateTime(b.created);
     $("#rSessionDate").textContent = fmtMY(b.date);
-    $("#rSessionTime").textContent = b.time + " (45 minit)";
+    $("#rSessionTime").textContent = fmtTime(b.time) + " (45 minit)";
     $("#rCategory").textContent = b.category || "-";
     $("#rPayRef").textContent = b.payRef || "-";
     $("#rBank").textContent = b.bank || "-";

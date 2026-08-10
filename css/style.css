@@ -749,7 +749,6 @@ select.form-control { appearance: none; }
 .pay-method { font-size: 13px; color: #5d6a64; }
 .pay-method b { color: var(--deep); display: block; margin-top: 4px; }
 .signature { text-align: center; font-size: 13px; color: #5d6a64; }
-.signature .sig-line { margin: 54px 0 8px; border-top: 1px solid var(--ink); width: 195px; }
 .signature b { color: var(--deep); display: block; font-size: 14px; }
 .stamp {
   display: inline-block; border: 3px solid var(--green-ok); color: var(--green-ok);
