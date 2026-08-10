@@ -20,7 +20,7 @@
     let h = parseInt(p[0], 10);
     const m = parseInt(p[1], 10) || 0;
     if (isNaN(h)) return hhmm;
-    const ap = h >= 12 ? "p.m" : "a.m";
+    const ap = h >= 12 ? "pm" : "am";
     if (h === 0) h = 12; else if (h > 12) h = h - 12;
     return h + "." + String(m).padStart(2, "0") + " " + ap;
   }
@@ -51,7 +51,7 @@
     $("#rEmail").textContent = "Email: " + b.email;
     $("#rDate").textContent = fmtDateTime(b.created);
     $("#rSessionDate").textContent = fmtMY(b.date);
-    $("#rSessionTime").textContent = fmtTime(b.time) + " (45 minit)";
+    $("#rSessionTime").textContent = "Bermula " + fmtTime(b.time) + " (sesi 45 minit)";
     $("#rCategory").textContent = b.category || "-";
     $("#rPayRef").textContent = b.payRef || "-";
     $("#rBank").textContent = b.bank || "-";
