@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dialihkan... | Shabran Associates</title>
+<script>
+(function () {
+  var p = window.location.pathname;
+  var q = window.location.search;
+  if (p && p.toLowerCase().indexOf("shabran-associates") !== -1 && p !== "/SHABRAN-ASSOCIATES/") {
+    window.location.replace("https://mohdshabran-cpu.github.io/SHABRAN-ASSOCIATES/" + q);
+  } else {
+    document.getElementById("msg").innerHTML =
+      "<h1>404 - Halaman tidak dijumpai</h1><p>Maaf, halaman yang anda cari tiada.</p>" +
+      "<p><a href='https://mohdshabran-cpu.github.io/SHABRAN-ASSOCIATES/' style='color:#c9a24b'>Kembali ke Laman Utama</a></p>";
+  }
+})();
+</script>
+<style>
+body { background:#0d0d0d; color:#e6dcc4; font-family:Arial, sans-serif; text-align:center; padding:80px 20px; }
+a { text-decoration:underline; }
+</style>
+</head>
+<body>
+<div id="msg" style="color:#e6dcc4">Memproses pautan...</div>
+</body>
+</html>
