@@ -37,17 +37,20 @@
   async function doLogin() {
     const pass = $("#loginPass").value.trim();
     if (!pass) { toast("Sila masukkan kata laluan.", "error"); return; }
-
-    let valid = pass === CONFIG.adminPassword;
-    if (!valid && isBackendReady()) {
-      try {
-        const res = await apiCall("verify", { password: pass });
-        valid = !!(res && res.ok);
-      } catch (e) { valid = false; }
+    if (!isBackendReady()) {
+      toast("Backend belum disambung (lihat SETUP.md). Log masuk tidak dapat disahkan.", "error");
+      return;
     }
+
+    let valid = false;
+    try {
+      const res = await apiCall("verify", { password: pass });
+      valid = !!(res && res.ok);
+    } catch (e) { valid = false; }
     if (valid) {
       loggedIn = true;
       sessionStorage.setItem("sha_admin", "1");
+      sessionStorage.setItem("sha_admin_pw", pass);
       $("#loginCard").style.display = "none";
       $("#adminShell").style.display = "flex";
       loadAll();
@@ -57,9 +60,14 @@
     }
   }
 
+  function adminPass() {
+    return sessionStorage.getItem("sha_admin_pw") || "";
+  }
+
   function doLogout() {
     loggedIn = false;
     sessionStorage.removeItem("sha_admin");
+    sessionStorage.removeItem("sha_admin_pw");
     $("#adminShell").style.display = "none";
     $("#loginCard").style.display = "";
     $("#loginPass").value = "";
@@ -83,7 +91,7 @@
   async function loadAll() {
     if (isBackendReady()) {
       try {
-        const data = await apiCall("getBookings", { password: CONFIG.adminPassword });
+        const data = await apiCall("getBookings", { password: adminPass() });
         if (data && data.bookings) allBookings = data.bookings;
       } catch (e) {
         toast("Gagal memuatkan tempahan dari server. (" + e.message + ")", "error");
@@ -154,6 +162,7 @@
           + "<td class='row-actions'>"
           + (b.status === "PENDING" ? "<button class='btn-icon btn-ok' data-act='confirm' data-ref='" + esc(b.ref) + "'>&#10003; Sahkan</button><button class='btn-icon btn-no' data-act='reject' data-ref='" + esc(b.ref) + "'>&#10007; Tolak</button>" : "")
           + "<button class='btn-icon btn-warn' data-act='mail' data-ref='" + esc(b.ref) + "'>&#9993;</button>"
+          + "<button class='btn-icon btn-danger' data-act='delete' data-ref='" + esc(b.ref) + "'>&#128465; Padam</button>"
           + "</td></tr>";
       }).join("") + "</tbody></table>";
 
@@ -183,6 +192,31 @@
         "\n\nSemak status: https://yoursite.github.io/status.html\n\nShabran Associates"
       );
       window.open("mailto:" + b.email + "?subject=" + subject + "&body=" + body, "_blank");
+    } else if (act === "delete") {
+      if (!confirm("PADAM tempahan " + ref + "?\n\nData ini akan dihapuskan PERMANEN dari server (Google Sheet) untuk mengoptimumkan storage.\n\nTindakan ini tidak boleh dibatalkan.")) return;
+      await doAction("deleteBooking", { ref: ref }, "Tempahan " + ref + " telah dipadam dari server.");
+    }
+  }
+
+  async function deleteOldBookings() {
+    if (!isBackendReady()) { toast("Backend belum disambung.", "error"); return; }
+    const months = prompt("Padam semua tempahan yang DICIPTA lebih lama daripada berapa bulan?", "6");
+    if (months === null) return;
+    const n = parseInt(months, 10);
+    if (!n || n < 1) { toast("Sila masukkan bilangan bulan yang sah (1 atau lebih).", "error"); return; }
+    const cnt = allBookings.filter(function (x) { return x.created && (Date.now() - new Date(x.created).getTime()) > n * 30 * 24 * 60 * 60 * 1000; }).length;
+    if (!cnt) { toast("Tiada tempahan lama ditemui untuk dipadam.", "error"); return; }
+    if (!confirm("Padam " + cnt + " tempahan yang lebih lama daripada " + n + " bulan?\n\nData akan dihapuskan PERMANEN dari server untuk mengoptimumkan storage.")) return;
+    const btn = $("#btnDeleteOld");
+    btn.disabled = true; btn.classList.add("loading");
+    try {
+      const res = await apiCall("deleteOldBookings", { months: n, password: adminPass() });
+      toast((res.deleted || 0) + " tempahan lama telah dipadam dari server.", "success");
+      loadAll();
+    } catch (e) {
+      toast("Ralat: " + e.message, "error");
+    } finally {
+      btn.disabled = false; btn.classList.remove("loading");
     }
   }
 
@@ -203,7 +237,7 @@
     const btn = document.activeElement;
     if (btn) { btn.disabled = true; btn.classList.add("loading"); }
     try {
-      await apiCall(action, Object.assign({ password: CONFIG.adminPassword }, payload));
+      await apiCall(action, Object.assign({ password: adminPass() }, payload));
       toast(successMsg, "success");
       loadAll();
     } catch (e) {
@@ -228,7 +262,7 @@
       btn.addEventListener("click", async function () {
         if (!isBackendReady()) { toast("Backend belum disambung.", "error"); return; }
         try {
-          await apiCall("unblockDate", { date: btn.dataset.del, password: CONFIG.adminPassword });
+          await apiCall("unblockDate", { date: btn.dataset.del, password: adminPass() });
           toast("Tarikh dibuka semula.");
           loadAll();
         } catch (e) { toast("Ralat: " + e.message, "error"); }
@@ -242,7 +276,7 @@
     if (!date) { toast("Sila pilih tarikh.", "error"); return; }
     if (!isBackendReady()) { toast("Backend belum disambung.", "error"); return; }
     try {
-      await apiCall("blockDate", { date: date, reason: reason, password: CONFIG.adminPassword });
+      await apiCall("blockDate", { date: date, reason: reason, password: adminPass() });
       toast("Tarikh ditutup untuk tempahan.");
       $("#blockDate").value = "";
       $("#blockReason").value = "";
@@ -298,8 +332,10 @@
     try {
       const qr = localStorage.getItem(CONFIG.storage.qr);
       const photo = localStorage.getItem(CONFIG.storage.photo);
+      const photo2 = localStorage.getItem(CONFIG.storage.photo2);
       $("#img-qrPreview").src = qr || "images/qr.svg";
       $("#img-photoPreview").src = photo || "images/lawyer.svg";
+      $("#img-photoPreview2").src = photo2 || "images/lawyer.svg";
     } catch (e) { /* ignore */ }
   }
 
@@ -309,7 +345,7 @@
       "<b>Backend:</b> " + (ready ? "&#10003; Bersambung" : "&#10007; Belum disambung (lihat SETUP.md)") +
       "<br><b>Yuran konsultasi:</b> " + CONFIG.feeText +
       "<br><b>Emel notifikasi:</b> " + CONFIG.email +
-      "<br><br><i>Nota: Gambar yang dimuat naik disimpan dalam pelayar ini sahaja. Untuk paparan kekal kepada semua pengunjung, gantikan fail <b>images/lawyer.jpg</b> dan <b>images/qr.png</b> terus dalam folder laman web anda.</i>";
+      "<br><br><i>Nota: Gambar yang dimuat naik disimpan dalam pelayar ini sahaja. Untuk paparan kekal kepada semua pengunjung, gantikan fail <b>images/lawyer.jpg</b> dan <b>images/qr.png</b> terus dalam folder laman web anda.<br><br>Padam tempahan lama membantu mengoptimumkan storage server (Google Sheet).</i>";
     renderPreviews();
   }
 
@@ -328,7 +364,9 @@
     });
 
     setupUpload("#photoFile", "photoPreview", CONFIG.storage.photo, "photo");
+    setupUpload("#photoFile2", "photoPreview2", CONFIG.storage.photo2, "photo");
     setupUpload("#qrFile", "qrPreview", CONFIG.storage.qr, "qr");
+    $("#btnDeleteOld").addEventListener("click", deleteOldBookings);
 
     if (sessionStorage.getItem("sha_admin") === "1") {
       loggedIn = true;

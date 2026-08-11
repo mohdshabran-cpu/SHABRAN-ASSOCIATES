@@ -94,6 +94,11 @@ function applyCustomImages() {
       const imgs = $all("[data-img=photo]");
       imgs.forEach(function (i) { i.onerror = null; i.src = photo; });
     }
+    const photo2 = localStorage.getItem(CONFIG.storage.photo2);
+    if (photo2) {
+      const imgs = $all("[data-img=photo2]");
+      imgs.forEach(function (i) { i.onerror = null; i.src = photo2; });
+    }
   } catch (e) { /* ignore */ }
 }
 

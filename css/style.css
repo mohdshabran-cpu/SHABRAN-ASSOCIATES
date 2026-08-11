@@ -802,6 +802,8 @@ select.form-control { appearance: none; }
 .btn-no:hover { background: #a0342f; color: #fff; }
 .btn-warn { background: #fdf0d5; color: #9a6b12; border-color: #e8cf96; }
 .btn-warn:hover { background: #9a6b12; color: #fff; }
+.btn-danger { background: #fbe6e4; color: #a0342f; border-color: #eec4c0; }
+.btn-danger:hover { background: #a0342f; color: #fff; }
 
 .upload-zone {
   display: block; border: 2px dashed var(--gold-deep); border-radius: 13px; padding: 28px; text-align: center;

@@ -12,8 +12,8 @@ Backend menggunakan **Google Apps Script** — percuma, data disimpan dalam Goog
 2. Klik **New Project** (projek baru)
 3. Padam semua kod sedia ada, kemudian **tampal keseluruhan isi fail `backend.gs`** dari folder ini
 4. **Ubah kata laluan admin** (penting!):
-   - Di dalam kod, cari baris: `ADMIN_PASSWORD: "shabran2026"`
-   - Tukar kepada kata laluan peribadi Tuan, contoh: `ADMIN_PASSWORD: "shabran2026@sahaja"`
+   - Di dalam kod, cari baris: `ADMIN_PASSWORD: "..."`
+   - Tukar kepada kata laluan peribadi Tuan (kata laluan ini **tidak boleh** berada dalam `config.js` — hanya dalam `backend.gs`)
 5. Klik **Save** (ikon disket)
 6. Klik **Deploy > New deployment**:
    - Pilih jenis: **Web app**
@@ -98,7 +98,7 @@ Buka `js/config.js` dan ubah:
 | Item | Baris |
 |---|---|
 | Nombor telefon & WhatsApp | `phone` / `whatsapp` |
-| Kata laluan admin | `adminPassword` (padankan dengan backend) |
+| Kata laluan admin | `ADMIN_PASSWORD` dalam `backend.gs` sahaja (RAHSIA — jangan simpan dalam `config.js` kerana ia dedah kepada pengunjung laman) |
 | URL backend | `scriptUrl` |
 
 ---

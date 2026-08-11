@@ -72,6 +72,7 @@
           </div>
           <input type="text" class="form-control" id="fSearch" placeholder="Cari nama / rujukan / IC / email...">
           <button class="btn btn-ghost btn-sm" id="btnRefresh">&#8635; Muat Semula</button>
+          <button class="btn btn-danger btn-sm" id="btnDeleteOld" title="Padam tempahan lama untuk mengoptimumkan storage">&#128465; Padam Tempahan Lama</button>
         </div>
         <div id="bookingTable"></div>
       </div>
@@ -80,14 +81,24 @@
     <!-- Tetapan -->
     <div class="admin-panel" id="panel-settings">
       <div class="panel-card">
-        <h3>Gambar Peguam (Foto Profesional Anda)</h3>
-        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px">Upload gambar anda sendiri — akan digunakan di laman utama dan bahagian Tentang.</p>
+        <h3>Gambar Peguam — Laman Utama (Hero)</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px">Upload gambar anda sendiri — dipaparkan di bahagian atas laman utama.</p>
         <label class="upload-zone" id="photoZone" for="photoFile">
           <div class="ic">&#128247;</div>
           <p><b>Klik untuk pilih gambar</b><br>JPG / PNG, format potret, maksimum 10MB</p>
           <input type="file" id="photoFile" accept="image/*" style="display:none">
         </label>
         <div class="upload-preview" id="photoPreview"></div>
+      </div>
+      <div class="panel-card">
+        <h3>Gambar Peguam — Bahagian Tentang</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px">Upload gambar berasingan untuk bahagian Tentang Kami (jika tidak mahu sama dengan hero).</p>
+        <label class="upload-zone" id="photoZone2" for="photoFile2">
+          <div class="ic">&#128247;</div>
+          <p><b>Klik untuk pilih gambar</b><br>JPG / PNG, format potret, maksimum 10MB</p>
+          <input type="file" id="photoFile2" accept="image/*" style="display:none">
+        </label>
+        <div class="upload-preview" id="photoPreview2"></div>
       </div>
       <div class="panel-card">
         <h3>QR Code DuitNow (Gambar QR Firma Anda)</h3>

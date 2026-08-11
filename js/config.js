@@ -31,15 +31,13 @@ const CONFIG = {
   /* ---------- Backend (Google Apps Script) ----------
      SELEPAS deploy Apps Script, tampal URL di sini.
      Contoh: "https://script.google.com/macros/s/ABCDEFGHIJKLMNOPQRSTUVWXYZ/exec" */
-  scriptUrl: "https://script.google.com/macros/s/AKfycbwKHOAUMAXCK5hyyJwUfvGbCHta4nYwdl5fO2ucUyCuu4j26Yy8CUKSrMbh_joIPVBT/exec",
-
-  /* ---------- Keselamatan Admin ---------- */
-  adminPassword: "shabran2026",
+  scriptUrl: "https://script.google.com/macros/s/AKfycbxDm341fu91ZX6FX7Qdyq8ktmT8LKWpHYJhnAlhS7Cw-1IohTgVfr2pc4jpeNnjKAOVvg/exec",
 
   /* ---------- Penyimpanan (localStorage keys) ---------- */
   storage: {
     qr: "sha_custom_qr",         /* gambar QR DuitNow milik firma */
-    photo: "sha_custom_photo",   /* gambar peguam */
+    photo: "sha_custom_photo",   /* gambar peguam (hero, laman utama) */
+    photo2: "sha_custom_photo2", /* gambar peguam (bahagian Tentang) */
     booking: "sha_last_booking"  /* data tempahan terakhir (untuk resit) */
   }
 };
