@@ -351,23 +351,28 @@
   }
 
   /* ---------- Init ---------- */
+  function bind(sel, ev, fn) {
+    const el = $(sel);
+    if (el) el.addEventListener(ev, fn);
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
-    $("#btnLogin").addEventListener("click", doLogin);
-    $("#loginPass").addEventListener("keydown", function (e) { if (e.key === "Enter") doLogin(); });
-    $("#btnLogout").addEventListener("click", doLogout);
-    $("#btnRefresh").addEventListener("click", loadAll);
-    $("#fStatus").addEventListener("change", renderBookings);
-    $("#fSearch").addEventListener("input", renderBookings);
-    $("#btnAddBlock").addEventListener("click", addBlock);
+    bind("#btnLogin", "click", doLogin);
+    bind("#loginPass", "keydown", function (e) { if (e.key === "Enter") doLogin(); });
+    bind("#btnLogout", "click", doLogout);
+    bind("#btnRefresh", "click", loadAll);
+    bind("#fStatus", "change", renderBookings);
+    bind("#fSearch", "input", renderBookings);
+    bind("#btnAddBlock", "click", addBlock);
 
     $all(".admin-tab[data-tab]").forEach(function (t) {
       t.addEventListener("click", function () { switchTab(t.dataset.tab); });
     });
 
-    setupUpload("#photoFile", "photoPreview", CONFIG.storage.photo, "photo");
-    setupUpload("#photoFile2", "photoPreview2", CONFIG.storage.photo2, "photo");
-    setupUpload("#qrFile", "qrPreview", CONFIG.storage.qr, "qr");
-    $("#btnDeleteOld").addEventListener("click", deleteOldBookings);
+    if ($("#photoFile")) setupUpload("#photoFile", "photoPreview", CONFIG.storage.photo, "photo");
+    if ($("#photoFile2")) setupUpload("#photoFile2", "photoPreview2", CONFIG.storage.photo2, "photo");
+    if ($("#qrFile")) setupUpload("#qrFile", "qrPreview", CONFIG.storage.qr, "qr");
+    bind("#btnDeleteOld", "click", deleteOldBookings);
 
     if (sessionStorage.getItem("sha_admin") === "1") {
       loggedIn = true;
