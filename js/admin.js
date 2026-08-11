@@ -287,7 +287,7 @@
   /* ---------- Upload gambar ---------- */
   function setupUpload(fileInputId, previewId, storageKey, imgType) {
     const fileInput = $(fileInputId);
-    const preview = $(previewId);
+    const preview = $("#" + previewId);
 
     fileInput.addEventListener("change", function () {
       const f = fileInput.files[0];
