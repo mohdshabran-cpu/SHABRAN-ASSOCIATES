@@ -285,7 +285,7 @@
   }
 
   /* ---------- Upload gambar ---------- */
-  function setupUpload(fileInputId, previewId, storageKey, imgType) {
+  function setupUpload(fileInputId, previewId, storageKey, imgType, remoteName) {
     const fileInput = $(fileInputId);
     const preview = $("#" + previewId);
 
@@ -309,9 +309,26 @@
             canvas.getContext("2d").drawImage(img, 0, 0, w, h);
             const data = canvas.toDataURL(imgType === "qr" ? "image/png" : "image/jpeg", 0.85);
             localStorage.setItem(storageKey, data);
-            toast("Gambar berjaya dimuat naik. Ia digunakan di seluruh laman web (pelayar ini).");
-            renderPreviews();
             applyCustomImages();
+
+            if (remoteName && isBackendReady()) {
+              apiCall("uploadPhoto", { name: remoteName, data: data, password: adminPass() })
+                .then(function (r) {
+                  if (r && r.ok) {
+                    toast("Berjaya! Gambar disimpan ke pelayan — kelihatan di SEMUA peranti.");
+                  } else {
+                    toast("Disimpan di pelayar ini sahaja: " + (r && r.error || "ralat"), "error");
+                  }
+                  renderPreviews();
+                })
+                .catch(function () {
+                  toast("Disimpan di pelayar ini sahaja (pelayan gambar tidak dapat dicapai).", "error");
+                  renderPreviews();
+                });
+            } else {
+              toast("Gambar berjaya dimuat naik. Ia digunakan di seluruh laman web (pelayar ini).");
+              renderPreviews();
+            }
           } catch (err) {
             toast("Gambar gagal disimpan (saiz terlalu besar). Sila gunakan gambar yang lebih kecil.", "error");
           }
@@ -346,7 +363,7 @@
       "<b>Backend:</b> " + (ready ? "&#10003; Bersambung" : "&#10007; Belum disambung (lihat SETUP.md)") +
       "<br><b>Yuran konsultasi:</b> " + CONFIG.feeText +
       "<br><b>Emel notifikasi:</b> " + CONFIG.email +
-      "<br><br><i>Nota: Gambar yang dimuat naik disimpan dalam pelayar ini sahaja. Untuk paparan kekal kepada semua pengunjung, gantikan fail <b>images/lawyer.jpg</b> dan <b>images/qr.png</b> terus dalam folder laman web anda.<br><br>Padam tempahan lama membantu mengoptimumkan storage server (Google Sheet).</i>";
+      "<br><br><i>Gambar yang dimuat naik kini disimpan ke <b>pelayan (spreadsheet pangkalan data)</b> — kelihatan pada SEMUA peranti. Fallback: disimpan dalam pelayar ini sahaja jika pelayan tidak dapat dicapai.<br><br>Padam tempahan lama membantu mengoptimumkan storage server (Google Sheet).</i>";
     renderPreviews();
   }
 
@@ -369,9 +386,9 @@
       t.addEventListener("click", function () { switchTab(t.dataset.tab); });
     });
 
-    if ($("#photoFile")) setupUpload("#photoFile", "photoPreview", CONFIG.storage.photo, "photo");
-    if ($("#photoFile2")) setupUpload("#photoFile2", "photoPreview2", CONFIG.storage.photo2, "photo");
-    if ($("#qrFile")) setupUpload("#qrFile", "qrPreview", CONFIG.storage.qr, "qr");
+    if ($("#photoFile")) setupUpload("#photoFile", "photoPreview", CONFIG.storage.photo, "photo", "photo");
+    if ($("#photoFile2")) setupUpload("#photoFile2", "photoPreview2", CONFIG.storage.photo2, "photo", "photo2");
+    if ($("#qrFile")) setupUpload("#qrFile", "qrPreview", CONFIG.storage.qr, "qr", "qr");
     bind("#btnDeleteOld", "click", deleteOldBookings);
 
     if (sessionStorage.getItem("sha_admin") === "1") {

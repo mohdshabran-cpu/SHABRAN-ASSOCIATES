@@ -81,27 +81,50 @@ function isBackendReady() {
   return CONFIG.scriptUrl && CONFIG.scriptUrl.indexOf("REPLACE_WITH_YOUR_URL") === -1;
 }
 
-/* ---------- Custom images (upload dari admin, disimpan local) ---------- */
+/* ---------- Custom images (upload admin: pusat di Drive + fallback setempat) ---------- */
+function setImageSrc(attr, src) {
+  const imgs = $all("[data-img=" + attr + "]");
+  imgs.forEach(function (i) { i.onerror = null; i.src = src; i.style.display = ""; });
+  if (attr === "photo2") {
+    const mono = document.getElementById("photoMono2");
+    if (mono) mono.style.display = "none";
+  }
+}
+
+function applyLocal() {
+  const qr = localStorage.getItem(CONFIG.storage.qr);
+  if (qr) setImageSrc("qr", qr);
+  const photo = localStorage.getItem(CONFIG.storage.photo);
+  if (photo) setImageSrc("photo", photo);
+  const photo2 = localStorage.getItem(CONFIG.storage.photo2);
+  if (photo2) setImageSrc("photo2", photo2);
+}
+
+function applyRemote(photos) {
+  if (!photos) return;
+  if (photos.qr) setImageSrc("qr", photos.qr);
+  if (photos.photo) setImageSrc("photo", photos.photo);
+  if (photos.photo2) setImageSrc("photo2", photos.photo2);
+}
+
 function applyCustomImages() {
+  try { applyLocal(); } catch (e) { /* ignore */ }
+  if (!isBackendReady()) return;
+
+  /* cache tempatan dahulu (offline) */
   try {
-    const qr = localStorage.getItem(CONFIG.storage.qr);
-    if (qr) {
-      const imgs = $all("[data-img=qr]");
-      imgs.forEach(function (i) { i.onerror = null; i.src = qr; });
-    }
-    const photo = localStorage.getItem(CONFIG.storage.photo);
-    if (photo) {
-      const imgs = $all("[data-img=photo]");
-      imgs.forEach(function (i) { i.onerror = null; i.src = photo; });
-    }
-    const photo2 = localStorage.getItem(CONFIG.storage.photo2);
-    if (photo2) {
-      const imgs = $all("[data-img=photo2]");
-      imgs.forEach(function (i) { i.onerror = null; i.src = photo2; i.style.display = ""; });
-      const mono = document.getElementById("photoMono2");
-      if (mono) mono.style.display = "none";
-    }
+    const cached = JSON.parse(localStorage.getItem(CONFIG.storage.remote) || "null");
+    if (cached) applyRemote(cached);
   } catch (e) { /* ignore */ }
+
+  /* segar dari pelayan (Drive) — gambar sama di semua peranti */
+  apiCall("getPhotos")
+    .then(function (d) {
+      if (!d || !d.ok || !d.photos) return;
+      try { localStorage.setItem(CONFIG.storage.remote, JSON.stringify(d.photos)); } catch (e) { /* ignore */ }
+      applyRemote(d.photos);
+    })
+    .catch(function () { /* pelayan tiada - kekal setempat */ });
 }
 
 /* ---------- Navbar ---------- */
