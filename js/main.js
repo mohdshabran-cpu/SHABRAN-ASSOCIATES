@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 window.addEventListener("load", function () { applyCustomImages(); });
 window.addEventListener("storage", function (e) {
-  if (e.key === CONFIG.storage.qr || e.key === CONFIG.storage.photo) {
+  if (e.key === CONFIG.storage.qr || e.key === CONFIG.storage.photo || e.key === CONFIG.storage.photo2) {
     applyCustomImages();
   }
 });
