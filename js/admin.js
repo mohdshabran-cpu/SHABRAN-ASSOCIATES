@@ -50,10 +50,17 @@
     }
 
     let valid = false;
+    let lockMsg = "";
     try {
       const res = await apiCall("verify", { password: pass });
       valid = !!(res && res.ok);
-    } catch (e) { valid = false; }
+    } catch (e) {
+      valid = false;
+      if (e.message === "LOCKED") {
+        lockMsg = "Terlalu banyak percubaan. Kunci sementara (anti-hack): " +
+          Math.ceil((e.wait ? e.wait : 600) / 60) + " minit.";
+      }
+    }
     if (valid) {
       loggedIn = true;
       sessionStorage.setItem("sha_admin", "1");
@@ -63,7 +70,7 @@
       loadAll();
       toast("Selamat kembali, Tuan Shabran.");
     } else {
-      toast("Kata laluan salah.", "error");
+      toast(lockMsg || "Kata laluan salah.", "error");
     }
   }
 
@@ -353,7 +360,7 @@
     empty.style.display = "none";
     modal.style.display = "flex";
     try {
-      const res = await apiCall("getReceipt", { ref: ref });
+      const res = await apiCall("getReceipt", { ref: ref, password: adminPass() });
       if (res && res.ok && res.receipt) {
         img.src = res.receipt;
         img.style.display = "";

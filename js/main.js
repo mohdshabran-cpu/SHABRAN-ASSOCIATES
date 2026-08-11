@@ -59,12 +59,25 @@ function toast(msg, type) {
 }
 
 /* ---------- Backend (Google Apps Script) ---------- */
+function clientId() {
+  try {
+    let id = localStorage.getItem("sha_client_id");
+    if (!id) {
+      id = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      localStorage.setItem("sha_client_id", id);
+    }
+    return id;
+  } catch (e) {
+    return "anon";
+  }
+}
+
 async function apiCall(action, payload) {
   const url = CONFIG.scriptUrl;
   if (!url || url.indexOf("REPLACE_WITH_YOUR_URL") !== -1) {
     throw new Error("BACKEND_NOT_CONFIGURED");
   }
-  const body = Object.assign({ action: action }, payload || {});
+  const body = Object.assign({ action: action, clientId: clientId() }, payload || {});
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -73,7 +86,11 @@ async function apiCall(action, payload) {
   if (!res.ok) throw new Error("HTTP_" + res.status);
   let data;
   try { data = await res.json(); } catch (e) { throw new Error("INVALID_RESPONSE"); }
-  if (data && data.ok === false) throw new Error(data.error || "UNKNOWN_ERROR");
+  if (data && data.ok === false) {
+    const err = new Error(data.error || "UNKNOWN_ERROR");
+    err.wait = data.wait;
+    throw err;
+  }
   return data;
 }
 
