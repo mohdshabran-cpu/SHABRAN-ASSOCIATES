@@ -134,5 +134,13 @@
 <script src="js/config.js?v=2045"></script>
 <script src="js/main.js?v=2045"></script>
 <script src="js/admin.js?v=2045"></script>
+<script>
+window.addEventListener("error", function (e) {
+  var d = document.createElement("div");
+  d.textContent = "RALAT: " + e.message + " | " + (e.filename || "?") + ":" + e.lineno;
+  d.style.cssText = "position:fixed;bottom:0;left:0;right:0;background:#8a312c;color:#fff;z-index:99999;padding:10px 14px;font-size:13px;font-family:monospace";
+  document.body.appendChild(d);
+});
+</script>
 </body>
 </html>
