@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2048">
+<link rel="stylesheet" href="css/style.css?v=2049">
 </head>
 <body>
 
@@ -73,6 +73,42 @@
       <div class="d"><b>Jumlah Bayaran</b><span id="sAmount">-</span></div>
     </div>
     <div class="timeline" id="sTimeline"></div>
+
+    <div class="alert-note" id="sBlocked" style="display:none;margin-top:20px">
+      &#9888; <b>Makluman:</b> Waktu tempahan ini kini <b>tidak tersedia</b>. Sila hubungi kami segera untuk menukar waktu lain melalui <a href="https://wa.me/60128199296" target="_blank" rel="noopener" style="color:var(--green-700);text-decoration:underline">WhatsApp 012-8199296</a> atau email <a href="mailto:mohdshabran@gmail.com" style="color:var(--green-700);text-decoration:underline">mohdshabran@gmail.com</a>.
+    </div>
+
+    <div class="pay-panel" id="payPanel" style="display:none;margin-top:26px;border:1.5px solid var(--gold);border-radius:16px;padding:24px;background:var(--paper)">
+      <div class="pay-head" style="text-align:center;margin-bottom:18px">
+        <h3 style="margin:0 0 4px">Bayaran Konsultasi — RM250.00</h3>
+        <p style="margin:0;font-size:13px;color:var(--ink-soft)">Imbas QR di bawah dengan aplikasi bank / DuitNow anda, kemudian muat naik resit.</p>
+      </div>
+      <div id="payStepPay" style="text-align:center">
+        <img id="qrPayImg" data-img="qr" src="images/qr.png" alt="DuitNow QR Code" style="width:210px;height:210px;object-fit:contain;border-radius:14px;background:#fff;padding:10px;border:1px solid var(--line)" onerror="this.src='images/qr.svg'">
+        <p style="font-size:13px;color:var(--ink-soft);margin:12px 0 0">Imbas QR ini dengan aplikasi bank anda<br>(DuitNow / aplikasi bank masing-masing)</p>
+      </div>
+      <div id="payStepUpload" style="display:none;text-align:center">
+        <p style="font-size:13.5px;color:var(--ink-soft);margin:0 0 16px"><b>Bayaran anda telah diterima.</b> Status menunggu pengesahan oleh pihak firma.</p>
+        <div class="alert-note" style="margin:0 auto;max-width:460px">&#9888; Buka semula halaman ini selepas beberapa jam untuk semakan status terkini. Pengesahan muktamad akan dimaklumkan melalui email.</div>
+      </div>
+      <div id="payStepFinal" style="display:none;text-align:center">
+        <div class="success-icon" style="margin:0 auto">&#10003;</div>
+        <p style="font-size:14px;color:var(--deep);margin:10px 0 0"><b>Tempahan anda telah MUKTAMAD.</b> Terima kasih!</p>
+      </div>
+      <div id="payStepUploadForm" style="margin-top:22px;border-top:1px solid var(--line);padding-top:20px">
+        <p style="font-size:13px;color:var(--ink-soft);margin:0 0 4px"><b>Muat naik resit bayaran</b> (screenshot / foto resit aplikasi bank, JPG/PNG)</p>
+        <p style="font-size:12px;color:var(--ink-soft);margin:0 0 12px">Rujukan tempahan: <b id="payRefLabel">-</b></p>
+        <label class="upload-zone" id="receiptZone" for="receiptFile" style="display:block;max-width:460px;margin:0 auto">
+          <div class="ic">&#128196;</div>
+          <p><b>Klik untuk pilih resit</b><br>JPG / PNG, maksimum 10MB</p>
+          <input type="file" id="receiptFile" accept="image/*" style="display:none">
+        </label>
+        <div style="margin-top:14px;text-align:center">
+          <button class="btn btn-gold" id="btnUploadReceipt" style="display:none">&#128190; Muat Naik Resit</button>
+        </div>
+      </div>
+    </div>
+
     <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
       <a href="#" class="btn btn-ghost btn-sm" id="sReceipt">&#128196; Lihat Resit</a>
       <a href="booking.html" class="btn btn-green btn-sm">Tempah Sesi Baru</a>
@@ -126,9 +162,9 @@
   </div>
 </footer>
 
-<script src="js/config.js?v=2048"></script>
-<script src="js/main.js?v=2048"></script>
-<script src="js/luxury.js?v=2048"></script>
-<script src="js/status.js?v=2048"></script>
+<script src="js/config.js?v=2049"></script>
+<script src="js/main.js?v=2049"></script>
+<script src="js/luxury.js?v=2049"></script>
+<script src="js/status.js?v=2049"></script>
 </body>
 </html>

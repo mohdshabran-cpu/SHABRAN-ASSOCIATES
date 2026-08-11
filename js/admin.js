@@ -13,6 +13,7 @@
   let loggedIn = false;
   let allBookings = [];
   let blockedList = [];
+  let blockedTimesList = [];
 
   const MONTHS = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
 
@@ -30,8 +31,14 @@
       String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
   }
 
-  const statusLabel = { PENDING: "Menunggu", CONFIRMED: "Disahkan", REJECTED: "Ditolak" };
-  const statusBadge = { PENDING: "pending", CONFIRMED: "confirmed", REJECTED: "rejected" };
+  const statusLabel = {
+    PENDING: "Menunggu Masa",
+    CONFIRMED: "Disahkan - Menunggu Bayaran",
+    PAID: "Resit Diterima",
+    FINALIZED: "Muktamad",
+    REJECTED: "Ditolak"
+  };
+  const statusBadge = { PENDING: "pending", CONFIRMED: "confirmed", PAID: "paid", FINALIZED: "final", REJECTED: "rejected" };
 
   /* ---------- Log masuk ---------- */
   async function doLogin() {
@@ -100,6 +107,10 @@
         const b = await apiCall("getBlocked", {});
         if (b && b.blocked) blockedList = b.blocked;
       } catch (e) { /* ignore */ }
+      try {
+        const bt = await apiCall("getBlockedTimes", {});
+        if (bt && bt.blockedTimes) blockedTimesList = bt.blockedTimes;
+      } catch (e) { /* ignore */ }
     } else {
       try {
         const saved = JSON.parse(localStorage.getItem(CONFIG.storage.booking));
@@ -109,6 +120,7 @@
     renderDash();
     renderBookings();
     renderBlocked();
+    renderBlockedTimes();
     renderSettings();
   }
 
@@ -156,11 +168,12 @@
           + "<td class='ref'>" + esc(b.ref) + "<br><span style='font-size:11px;color:var(--ink-soft)'>" + fmtDateTime(b.created) + "</span></td>"
           + "<td>" + fmtMY(b.date) + "<br><b>" + esc(fmtTime12(b.time)) + "</b> &bull; " + esc(b.category || "-") + "</td>"
           + "<td><b>" + esc(b.name) + "</b><br><span style='font-size:12px;color:var(--ink-soft)'>" + esc(b.ic) + "<br>" + esc(b.phone) + " &bull; " + esc(b.email) + "</span></td>"
-          + "<td><b>" + fmtMoney(b.amount || CONFIG.fee) + "</b><br><span style='font-size:12px;color:var(--ink-soft)'>" + esc(b.bank || "-") + "<br>Ruj: " + esc(b.payRef || "-") + "</span></td>"
+          + "<td><b>" + fmtMoney(b.amount || CONFIG.fee) + "</b><br><span style='font-size:12px;color:var(--ink-soft)'>" + esc(b.bank || b.payRef || "-") + "</span></td>"
           + "<td><span class='badge " + statusBadge[b.status] + "'>" + statusLabel[b.status] + "</span>"
           + (b.rejectReason ? "<br><span style='font-size:11px;color:var(--red)'>" + esc(b.rejectReason) + "</span>" : "") + "</td>"
           + "<td class='row-actions'>"
-          + (b.status === "PENDING" ? "<button class='btn-icon btn-ok' data-act='confirm' data-ref='" + esc(b.ref) + "'>&#10003; Sahkan</button><button class='btn-icon btn-no' data-act='reject' data-ref='" + esc(b.ref) + "'>&#10007; Tolak</button>" : "")
+          + (b.status === "PENDING" ? "<button class='btn-icon btn-ok' data-act='confirm' data-ref='" + esc(b.ref) + "'>&#10003; Sahkan Masa</button><button class='btn-icon btn-no' data-act='reject' data-ref='" + esc(b.ref) + "'>&#10007; Tolak</button>" : "")
+          + (b.status === "PAID" ? "<button class='btn-icon btn-gold' data-act='receipt' data-ref='" + esc(b.ref) + "'>&#128196; Resit</button><button class='btn-icon btn-ok' data-act='finalize' data-ref='" + esc(b.ref) + "'>&#10003; Sahkan Bayaran</button>" : "")
           + "<button class='btn-icon btn-warn' data-act='mail' data-ref='" + esc(b.ref) + "'>&#9993;</button>"
           + "<button class='btn-icon btn-danger' data-act='delete' data-ref='" + esc(b.ref) + "'>&#128465; Padam</button>"
           + "</td></tr>";
@@ -177,10 +190,15 @@
     if (!b) return;
 
     if (act === "confirm") {
-      if (!confirm("Sahkan tempahan " + ref + "?\n\nKlien akan dimaklumkan melalui email: " + b.email)) return;
-      await doAction("confirmBooking", { ref: ref }, "Tempahan disahkan. Klien telah dimaklumkan melalui email.");
+      if (!confirm("Sahkan MASA tempahan " + ref + "?\n\nKlien akan dimaklumkan melalui email untuk meneruskan bayaran (QR & upload resit di halaman Semak Status).")) return;
+      await doAction("confirmBooking", { ref: ref }, "Masa tempahan disahkan. Klien dimaklumkan untuk bayaran.");
+    } else if (act === "finalize") {
+      if (!confirm("SAHKAN BAYARAN untuk " + ref + "?\n\nPastikan resit telah disemak. Tempahan akan dimuktamadkan dan klien dimaklumkan melalui email.")) return;
+      await doAction("finalizeBooking", { ref: ref }, "Bayaran disahkan — tempahan MUKTAMAD. Klien dimaklumkan.");
+    } else if (act === "receipt") {
+      await showReceipt(ref);
     } else if (act === "reject") {
-      const reason = prompt("Sebab penolakan (dihantar ke email klien):", "Bayaran tidak dapat disahkan");
+      const reason = prompt("Sebab penolakan (dihantar ke email klien):", "Tempahan tidak dapat dilayan.");
       if (reason === null) return;
       await doAction("rejectBooking", { ref: ref, reason: reason.trim() }, "Tempahan ditolak. Klien telah dimaklumkan melalui email.");
     } else if (act === "mail") {
@@ -189,7 +207,7 @@
         "Assalamualaikum " + b.name + ",\n\nRujukan tempahan: " + ref +
         "\nTarikh: " + fmtMY(b.date) + ", " + fmtTime12(b.time) +
         "\nStatus: " + statusLabel[b.status] +
-        "\n\nSemak status: https://yoursite.github.io/status.html\n\nShabran Associates"
+        "\n\nSemak status: " + window.location.origin + window.location.pathname.replace(/[^/]*$/, "status.html") + "\n\nShabran Associates"
       );
       window.open("mailto:" + b.email + "?subject=" + subject + "&body=" + body, "_blank");
     } else if (act === "delete") {
@@ -282,6 +300,69 @@
       $("#blockReason").value = "";
       loadAll();
     } catch (e) { toast("Ralat: " + e.message, "error"); }
+  }
+
+  /* ---------- Waktu tidak tersedia (tarikh + masa) ---------- */
+  function renderBlockedTimes() {
+    const wrap = $("#blockTimeList");
+    if (!wrap) return;
+    if (!blockedTimesList.length) {
+      wrap.innerHTML = '<p style="color:var(--ink-soft);font-size:14px">Tiada waktu ditutup. Semua slot mengikut jadual biasa.</p>';
+      return;
+    }
+    wrap.innerHTML = "<table class='b-table'><thead><tr><th>Tarikh</th><th>Masa</th><th>Sebab</th><th></th></tr></thead><tbody>" +
+      blockedTimesList.slice().sort(function (a, b) { return (a.date + a.time).localeCompare(b.date + b.time); }).map(function (x) {
+        return "<tr><td><b>" + fmtMY(x.date) + "</b></td><td><b>" + esc(fmtTime12(x.time)) + "</b></td><td>" + esc(x.reason || "-") + "</td><td><button class='btn-icon btn-no' data-del-time='" + esc(x.date) + "|" + esc(x.time) + "'>Buang</button></td></tr>";
+      }).join("") + "</tbody></table>";
+    $all("[data-del-time]", wrap).forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        if (!isBackendReady()) { toast("Backend belum disambung.", "error"); return; }
+        const parts = btn.dataset.delTime.split("|");
+        try {
+          await apiCall("unblockTime", { date: parts[0], time: parts[1], password: adminPass() });
+          toast("Waktu dibuka semula.");
+          loadAll();
+        } catch (e) { toast("Ralat: " + e.message, "error"); }
+      });
+    });
+  }
+
+  async function addBlockTime() {
+    const date = $("#btDate").value;
+    const time = $("#btTime").value;
+    const reason = $("#btReason").value.trim();
+    if (!date || !time) { toast("Sila pilih tarikh dan masa.", "error"); return; }
+    if (!isBackendReady()) { toast("Backend belum disambung.", "error"); return; }
+    try {
+      const res = await apiCall("blockTime", { date: date, time: time, reason: reason, password: adminPass() });
+      const n = res && res.notified;
+      toast("Waktu ditutup. Klien yang terjejas dimaklumkan" + (n > 0 ? " (" + n + " emel dihantar)." : "."));
+      $("#btDate").value = "";
+      $("#btReason").value = "";
+      loadAll();
+    } catch (e) { toast("Ralat: " + e.message, "error"); }
+  }
+
+  /* ---------- Lihat resit bayaran ---------- */
+  async function showReceipt(ref) {
+    const modal = $("#receiptModal");
+    const img = $("#receiptImg");
+    const empty = $("#receiptEmpty");
+    $("#receiptRefLabel").textContent = "Rujukan tempahan: " + ref;
+    img.style.display = "none";
+    empty.style.display = "none";
+    modal.style.display = "flex";
+    try {
+      const res = await apiCall("getReceipt", { ref: ref });
+      if (res && res.ok && res.receipt) {
+        img.src = res.receipt;
+        img.style.display = "";
+      } else {
+        empty.style.display = "";
+      }
+    } catch (e) {
+      empty.style.display = "";
+    }
   }
 
   /* ---------- Upload gambar ---------- */
@@ -381,6 +462,8 @@
     bind("#fStatus", "change", renderBookings);
     bind("#fSearch", "input", renderBookings);
     bind("#btnAddBlock", "click", addBlock);
+    bind("#btnAddBlockTime", "click", addBlockTime);
+    bind("#btnCloseReceipt", "click", function () { $("#receiptModal").style.display = "none"; });
 
     $all(".admin-tab[data-tab]").forEach(function (t) {
       t.addEventListener("click", function () { switchTab(t.dataset.tab); });
@@ -389,7 +472,18 @@
     if ($("#photoFile")) setupUpload("#photoFile", "photoPreview", CONFIG.storage.photo, "photo", "photo");
     if ($("#photoFile2")) setupUpload("#photoFile2", "photoPreview2", CONFIG.storage.photo2, "photo", "photo2");
     if ($("#qrFile")) setupUpload("#qrFile", "qrPreview", CONFIG.storage.qr, "qr", "qr");
-    bind("#btnDeleteOld", "click", deleteOldBookings);
+    if ($("#btnDeleteOld")) bind("#btnDeleteOld", "click", deleteOldBookings);
+
+    /* Isi senarai masa untuk borang waktu tutup */
+    const btSelect = $("#btTime");
+    if (btSelect) {
+      CONFIG.timeSlots.forEach(function (t) {
+        const o = document.createElement("option");
+        o.value = t;
+        o.textContent = t;
+        btSelect.appendChild(o);
+      });
+    }
 
     if (sessionStorage.getItem("sha_admin") === "1") {
       loggedIn = true;

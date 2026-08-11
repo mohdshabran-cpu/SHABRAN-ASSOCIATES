@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2048">
+<link rel="stylesheet" href="css/style.css?v=2049">
 </head>
 <body>
 
@@ -65,8 +65,10 @@
           <div class="select-wrap">
             <select class="form-control" id="fStatus">
               <option value="">Semua Status</option>
-              <option value="PENDING">Menunggu Pengesahan</option>
-              <option value="CONFIRMED">Disahkan</option>
+              <option value="PENDING">Menunggu Pengesahan Masa</option>
+              <option value="CONFIRMED">Masa Disahkan (Menunggu Bayaran)</option>
+              <option value="PAID">Resit Diterima (Sah Bayaran)</option>
+              <option value="FINALIZED">Muktamad</option>
               <option value="REJECTED">Ditolak</option>
             </select>
           </div>
@@ -127,13 +129,39 @@
         </div>
         <div id="blockList"></div>
       </div>
+      <div class="panel-card">
+        <h3>Tambah Waktu Tidak Tersedia (tarikh + masa tertentu)</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:12px">Klien yang telah menempah slot ini akan <b>dimaklumkan automatik melalui email</b>.</p>
+        <div class="filter-row">
+          <input type="date" class="form-control" id="btDate">
+          <select class="form-control" id="btTime"></select>
+          <input type="text" class="form-control" id="btReason" placeholder="Sebab (cth: Temujanji penuh)" style="flex:1;min-width:220px">
+          <button class="btn btn-green btn-sm" id="btnAddBlockTime">+ Tambah</button>
+        </div>
+        <div id="blockTimeList"></div>
+      </div>
     </div>
   </main>
 </div>
 
-<script src="js/config.js?v=2048"></script>
-<script src="js/main.js?v=2048"></script>
-<script src="js/admin.js?v=2048"></script>
+<!-- Modal: Lihat Resit -->
+<div class="receipt-modal" id="receiptModal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(13,13,13,.78);justify-content:center;align-items:flex-start;padding:40px 16px;overflow:auto">
+  <div style="background:#fff;border-radius:16px;max-width:560px;width:100%;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.45)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 style="margin:0">Resit Bayaran</h3>
+      <button class="btn-icon btn-no" id="btnCloseReceipt">&#10007; Tutup</button>
+    </div>
+    <p style="font-size:13px;color:var(--ink-soft);margin:0 0 14px" id="receiptRefLabel">-</p>
+    <div style="background:#faf7ef;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center">
+      <img id="receiptImg" alt="Resit bayaran" style="max-width:100%;max-height:60vh;border-radius:8px">
+      <p id="receiptEmpty" style="display:none;font-size:13.5px;color:var(--ink-soft)">Tiada resit dimuat naik untuk tempahan ini. <p>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js?v=2049"></script>
+<script src="js/main.js?v=2049"></script>
+<script src="js/admin.js?v=2049"></script>
 <script>
 window.addEventListener("error", function (e) {
   var d = document.createElement("div");

@@ -71,7 +71,6 @@
       if (!good) ok = false;
     });
     if (ok) {
-      $("#fPayDate").max = todayStr();
       goStep(2);
     } else {
       toast("Sila lengkapkan maklumat bertanda * dengan betul.", "error");
@@ -89,6 +88,11 @@
       if (data) {
         blockedDates = data.blocked || [];
         bookedSlots = data.booked || {};
+        (data.blockedTimes || []).forEach(function (bt) {
+          if (bookedSlots[bt.date] && bookedSlots[bt.date].indexOf(bt.time) !== -1) return;
+          if (!bookedSlots[bt.date]) bookedSlots[bt.date] = [];
+          bookedSlots[bt.date].push(bt.time);
+        });
       }
     } catch (e) {
       if (e.message === "BACKEND_NOT_CONFIGURED") {
@@ -198,23 +202,11 @@
   }
 
   function validateStep3() {
-    let ok = true;
-    const rules = [
-      ["#fBank", function (v) { return v.length >= 2; }],
-      ["#fPayDate", function (v) { return v !== ""; }],
-      ["#fRef", function (v) { return v.length >= 4; }]
-    ];
-    rules.forEach(function (r) {
-      const el = $(r[0]);
-      const good = r[1](el.value.trim());
-      markInvalid(el, !good);
-      if (!good) ok = false;
-    });
     if (!$("#fTerms").checked) {
-      toast("Sila sahkan terma dengan menandakan kotak persetujuan.", "error");
-      ok = false;
+      toast("Sila sahkan pengesahan dengan menandakan kotak persetujuan.", "error");
+      return false;
     }
-    return ok;
+    return true;
   }
 
   /* ---------- Hantar tempahan ---------- */
@@ -231,9 +223,6 @@
       email: $("#fEmail").value.trim(),
       category: $("#fCategory").value,
       description: $("#fDesc").value.trim(),
-      bank: $("#fBank").value.trim(),
-      payDate: $("#fPayDate").value,
-      payRef: $("#fRef").value.trim(),
       amount: CONFIG.fee,
       status: "PENDING",
       created: new Date().toISOString()

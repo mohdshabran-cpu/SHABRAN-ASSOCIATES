@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2048">
+<link rel="stylesheet" href="css/style.css?v=2049">
 </head>
 <body>
 
@@ -128,7 +128,7 @@
     <div class="wizard-actions">
       <button class="btn btn-ghost" id="btnBack1">&#8592; Kembali</button>
       <div class="right">
-        <button class="btn btn-green" id="btnNext2" disabled>Seterusnya: Bayaran &#8594;</button>
+        <button class="btn btn-green" id="btnNext2" disabled>Seterusnya: Pengesahan &#8594;</button>
       </div>
     </div>
   </div>
@@ -150,44 +150,26 @@
             <div class="fee-row"><span>Jumlah Bayaran</span><b id="payTotal" style="font-size:18px">RM250.00</b></div>
           </div>
         </div>
-        <div class="qr-box" style="margin-top:20px">
-          <img id="qrImg" data-img="qr" src="images/qr.png" alt="DuitNow QR Code" onerror="this.src='images/qr.svg'">
-          <span class="amt">RM250.00</span>
-          <span class="qr-hint">Imbas QR di atas dengan aplikasi bank anda<br>(DuitNow / aplikasi bank masing-masing)</span>
+        <div class="ref-notice" style="margin-top:20px;background:rgba(212,169,55,.08);border:1px solid rgba(212,169,55,.35);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--ink-soft)">
+          &#128274; <b>Tiada bayaran sekarang.</b> QR DuitNow akan dipaparkan di halaman <b>Semak Status Tempahan</b> selepas masa anda disahkan oleh pihak kami.
         </div>
       </div>
       <div class="pay-verify">
-        <h3>Pengesahan Bayaran</h3>
-        <p class="sub">Sila lengkapkan maklumat selepas bayaran berjaya dibuat.</p>
+        <h3>Pengesahan Tempahan</h3>
+        <p class="sub">Bayaran <b>RM250.00</b> hanya perlu dibuat <b>SELEPAS masa tempahan anda disahkan</b> oleh pihak kami.</p>
         <ol class="pay-steps">
-          <li><span class="n">1</span><span>Imbas QR code di sebelah dengan aplikasi bank / DuitNow anda.</span></li>
-          <li><span class="n">2</span><span>Bayar jumlah <b>RM250.00</b> tepat seperti yang tertera.</span></li>
-          <li><span class="n">3</span><span>Isi maklumat rujukan bayaran di bawah untuk pengesahan.</span></li>
+          <li><span class="n">1</span><span>Hantar tempahan anda — tiada bayaran diperlukan sekarang.</span></li>
+          <li><span class="n">2</span><span>Pihak kami akan <b>sahkan masa tempahan</b> anda (biasanya dalam 24 jam bekerja).</span></li>
+          <li><span class="n">3</span><span>Selepas disahkan, buka halaman <b>Semak Status Tempahan</b> — <b>QR DuitNow</b> akan dipaparkan untuk bayaran.</span></li>
+          <li><span class="n">4</span><span>Selepas bayar, <b>muat naik resit</b> di halaman yang sama untuk memuktamadkan tempahan.</span></li>
         </ol>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Bank / Aplikasi Bayaran <span class="req">*</span></label>
-            <input type="text" class="form-control" id="fBank" placeholder="cth: Maybank, CIMB, DuitNow">
-            <span class="field-error">Sila isi nama bank / aplikasi.</span>
-          </div>
-          <div class="form-group">
-            <label>Tarikh Bayaran <span class="req">*</span></label>
-            <input type="date" class="form-control" id="fPayDate" max="">
-            <span class="field-error">Sila pilih tarikh bayaran.</span>
-          </div>
-          <div class="form-group full">
-            <label>Rujukan Transaksi Bayaran <span class="req">*</span></label>
-            <input type="text" class="form-control" id="fRef" placeholder="cth: M240811T123456 (rujukan dari SMS / resit aplikasi bank)">
-            <span class="field-error">Sila isi nombor rujukan transaksi.</span>
-          </div>
-        </div>
         <label style="display:flex;gap:10px;align-items:flex-start;margin-top:22px;font-size:13px;color:var(--ink-soft);cursor:pointer">
           <input type="checkbox" id="fTerms" style="margin-top:3px">
-          <span>Saya mengesahkan bahawa bayaran <b>RM250.00</b> telah dibuat dan saya bersetuju dengan <a href="#" style="color:var(--green-700);text-decoration:underline" onclick="event.preventDefault()">syarat-syarat konsultasi</a>.</span>
+          <span>Saya bersetuju menempah sesi konsultasi dan akan membuat bayaran <b>RM250.00</b> selepas masa tempahan disahkan, serta bersetuju dengan <a href="#" style="color:var(--green-700);text-decoration:underline" onclick="event.preventDefault()">syarat-syarat konsultasi</a>.</span>
         </label>
         <div class="wizard-actions" style="margin-top:26px">
           <button class="btn btn-ghost" id="btnBack2">&#8592; Kembali</button>
-          <button class="btn btn-gold" id="btnSubmit">&#128274; Hantar Tempahan &amp; Jana Resit</button>
+          <button class="btn btn-gold" id="btnSubmit">&#128274; Hantar Tempahan</button>
         </div>
       </div>
     </div>
@@ -198,15 +180,15 @@
     <div class="success-box">
       <div class="success-icon">&#10003;</div>
       <h2>Tempahan Diterima!</h2>
-      <p>Tempahan konsultasi anda telah dihantar. Resit anda telah dijana secara automatik. Sila simpan nombor rujukan tempahan untuk semakan status.</p>
+      <p>Tempahan konsultasi anda telah dihantar. Pihak kami akan mengesahkan masa tempahan anda (biasanya dalam 24 jam bekerja).</p>
       <div class="ref-chip">&#128279; <span id="finalRef">-</span></div>
-      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:26px">Pengesahan akan dikemukakan melalui email selepas bayaran disemak oleh pihak firma (biasanya dalam tempoh 24 jam).</p>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:26px">Selepas masa disahkan, QR DuitNow akan dipaparkan di halaman Semak Status untuk bayaran RM250.00 — kemudian muat naik resit untuk memuktamadkan tempahan.</p>
       <div class="success-actions">
         <a class="btn btn-gold" id="btnReceipt" href="#">&#128196; Lihat / Cetak Resit</a>
         <a class="btn btn-ghost" href="status.html">Semak Status Tempahan</a>
         <a class="btn btn-light" href="index.html">Kembali ke Laman Utama</a>
       </div>
-      <div class="alert-note">&#9888; <b>Penting:</b> Semak inbox dan spam email anda. Sekiranya tiada notifikasi selepas 24 jam, sila hubungi kami melalui <a href="https://wa.me/60128199296" target="_blank" rel="noopener" style="color:var(--green-700);text-decoration:underline">WhatsApp</a> atau email <a href="mailto:mohdshabran@gmail.com" style="color:var(--green-700);text-decoration:underline">mohdshabran@gmail.com</a>.</div>
+      <div class="alert-note">&#9888; <b>Penting:</b> Simpan nombor rujukan anda. Semak status tempahan di <a href="status.html" style="color:var(--green-700);text-decoration:underline">laman Semak Status</a>. Sekiranya tiada pengesahan selepas 24 jam, sila hubungi kami melalui <a href="https://wa.me/60128199296" target="_blank" rel="noopener" style="color:var(--green-700);text-decoration:underline">WhatsApp</a> atau email <a href="mailto:mohdshabran@gmail.com" style="color:var(--green-700);text-decoration:underline">mohdshabran@gmail.com</a>.</div>
     </div>
   </div>
 
@@ -261,9 +243,9 @@
   </div>
 </footer>
 
-<script src="js/config.js?v=2048"></script>
-<script src="js/main.js?v=2048"></script>
-<script src="js/luxury.js?v=2048"></script>
-<script src="js/booking.js?v=2048"></script>
+<script src="js/config.js?v=2049"></script>
+<script src="js/main.js?v=2049"></script>
+<script src="js/luxury.js?v=2049"></script>
+<script src="js/booking.js?v=2049"></script>
 </body>
 </html>

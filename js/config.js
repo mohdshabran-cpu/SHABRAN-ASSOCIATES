@@ -31,7 +31,7 @@ const CONFIG = {
   /* ---------- Backend (Google Apps Script) ----------
      SELEPAS deploy Apps Script, tampal URL di sini.
      Contoh: "https://script.google.com/macros/s/ABCDEFGHIJKLMNOPQRSTUVWXYZ/exec" */
-  scriptUrl: "https://script.google.com/macros/s/AKfycbw9BOJhwIF5Numss7OvGzidpIdWR4QVWSW8-XSncWOmi2ouz62dpc3MLlfKBK4t65U6DA/exec",
+  scriptUrl: "https://script.google.com/macros/s/AKfycbxOBGZtN-etcTfz8RnP1-TbDr8hzbgaQO7SvbthDZh8pseKiEJVNr8QxTFpHR-p5z8ESw/exec",
 
   /* ---------- Penyimpanan (localStorage keys) ---------- */
   storage: {

@@ -696,8 +696,10 @@ select.form-control { appearance: none; }
 .status-head h3 { font-family: var(--serif); font-size: 28px; color: var(--deep); font-weight: 600; }
 .badge { padding: 8px 18px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
 .badge.pending { background: #fdf0d5; color: #9a6b12; border: 1px solid #e8cf96; }
-.badge.confirmed { background: #e2f3e8; color: #1f6b43; border: 1px solid #b9ddc6; }
-.badge.rejected { background: #fbe6e4; color: #a0342f; border: 1px solid #eec4c0; }
+  .badge.confirmed { background: #e2f3e8; color: #1f6b43; border: 1px solid #b9ddc6; }
+  .badge.paid { background: #e8eefd; color: #2f519b; border: 1px solid #c3d2f0; }
+  .badge.final { background: #0d0d0d; color: #e3c878; border: 1px solid #c9a24b; }
+  .badge.rejected { background: #fbe6e4; color: #a0342f; border: 1px solid #eec4c0; }
 
 .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; margin-bottom: 28px; }
 .detail-grid .d b { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-deep); margin-bottom: 3px; }
@@ -804,7 +806,9 @@ select.form-control { appearance: none; }
 .btn-warn { background: #fdf0d5; color: #9a6b12; border-color: #e8cf96; }
 .btn-warn:hover { background: #9a6b12; color: #fff; }
 .btn-danger { background: #fbe6e4; color: #a0342f; border-color: #eec4c0; }
-.btn-danger:hover { background: #a0342f; color: #fff; }
+  .btn-danger:hover { background: #a0342f; color: #fff; }
+  .btn-icon.btn-gold { background: #fdf3d7; color: #8a6417; border-color: #e3c878; }
+  .btn-icon.btn-gold:hover { background: #c9a24b; color: #fff; }
 
 .upload-zone {
   display: block; border: 2px dashed var(--gold-deep); border-radius: 13px; padding: 28px; text-align: center;
