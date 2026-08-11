@@ -247,10 +247,11 @@ h1, h2, h3, .serif { font-family: var(--serif); }
 /* ---------------- Tentang ---------------- */
 .about-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 72px; align-items: center; }
 .about-photo { position: relative; max-width: 430px; margin: 0 auto; }
-.about-photo img {
+.about-photo > img {
   border-radius: 22px 22px 130px 22px; box-shadow: var(--shadow-lg);
-  aspect-ratio: 4/5; object-fit: cover; width: 100%;
+  aspect-ratio: 4/5; object-fit: cover; width: 100%; display: block;
 }
+.about-photo #photoMono2 img { aspect-ratio: auto; object-fit: contain; border-radius: 0; box-shadow: none; }
 .about-photo .frame {
   position: absolute; inset: 26px -26px -26px 26px; border: 2px solid var(--gold);
   border-radius: 130px 22px 22px 22px; z-index: -1;

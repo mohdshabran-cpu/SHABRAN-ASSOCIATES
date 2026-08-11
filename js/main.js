@@ -97,7 +97,9 @@ function applyCustomImages() {
     const photo2 = localStorage.getItem(CONFIG.storage.photo2);
     if (photo2) {
       const imgs = $all("[data-img=photo2]");
-      imgs.forEach(function (i) { i.onerror = null; i.src = photo2; });
+      imgs.forEach(function (i) { i.onerror = null; i.src = photo2; i.style.display = ""; });
+      const mono = document.getElementById("photoMono2");
+      if (mono) mono.style.display = "none";
     }
   } catch (e) { /* ignore */ }
 }
