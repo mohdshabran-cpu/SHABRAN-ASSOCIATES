@@ -49,6 +49,10 @@
     const blocked = $("#sBlocked");
     if (blocked) blocked.style.display = b.slotBlocked ? "" : "none";
 
+    /* Peta lokasi — dipapar bila tempahan MUKTAMAD */
+    const map = $("#sMap");
+    if (map) map.style.display = b.status === "FINALIZED" ? "" : "none";
+
     /* Panel bayaran (QR + resit) */
     const panel = $("#payPanel");
     if (panel) {
